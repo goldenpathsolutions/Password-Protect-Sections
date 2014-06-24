@@ -7,10 +7,10 @@ A WordPress Plugin that allows a user to password protect sections of content wi
 
 The purpose of this plugin is to allow sections within a WordPress post to be protected by a password.  Following is a list of features offed by this plugin.
 
-*__No Account Necessary__ - Access control by password and/or account login.
-*__AJAX Support__ - page does not have to refresh to expose protected content.
-*__Reusable Passwords__ - the same password may be used to unlock many different sections of content.
-*__Remember Me__ - a visitor only needs to enter the password once during a visit.  Optionally, they may use a cookie to remember them for future visits.
+* __No Account Necessary__ - Access control by password and/or account login.
+* __AJAX Support__ - page does not have to refresh to expose protected content.
+* __Reusable Passwords__ - the same password may be used to unlock many different sections of content.
+* __Remember Me__ - a visitor only needs to enter the password once during a visit.  Optionally, they may use a cookie to remember them for future visits.
 
 
 ##No Account Necessary
