@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;;;;;AAUI,qBAAG;EAEC,aAAa,EAAE,CAAC;AAGpB,iCAAe;EACX,aAAa,EAAE,IAAI;AAGvB,qCAAmB;EACf,UAAU,EAAE,MAAM;EAClB,WAAW,EAAE,MAAM;EACnB,MAAM,EAAE,QAAQ;AAGpB,wBAAM;EACF,WAAW,EAAE,IAAI",
+"sources": ["../sass/style-admin.scss"],
+"names": [],
+"file": "style-admin.css"
+}

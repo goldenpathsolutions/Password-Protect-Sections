@@ -1,0 +1,51 @@
+/*
+    Contains default styling for this plugin
+
+    Created on : Jun 24, 2014, 11:00:15 AM
+    Author     : Patrick Jackson <pjackson@goldenpathsolutions.com, 
+                 Golden Path Solutions (www.goldenpathsolutions.com)
+
+
+    Table of Contents
+
+    1. Colors
+    2. Section Replacement Content (locked)
+*/
+/*---------------------------------------------------------------------------
+ *  1. Colors
+ *---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------
+ *  2. Section Replacement Content (locked)
+ *
+ *  The following styles apply to what is displayed to visitors when a content
+ *  section is locked.
+ *
+ *---------------------------------------------------------------------------*/
+div.password-protected-section {
+  width: 80%;
+  margin-left: 20px;
+  background-color: lightyellow;
+  border: 1px solid #e0e000;
+  padding: 10px;
+  /* Error State */ }
+  div.password-protected-section form {
+    margin: 10px 0 0; }
+  div.password-protected-section p {
+    margin: 0;
+    line-height: 1.25em; }
+  div.password-protected-section label {
+    font-weight: bold;
+    margin-right: 10px; }
+  div.password-protected-section button {
+    margin-left: 10px; }
+  div.password-protected-section p.gps-error {
+    padding: 5px;
+    margin-bottom: 5px; }
+  div.password-protected-section p.gps-error, div.password-protected-section input.gps-error {
+    color: #9e0077;
+    background-color: #ffebfa;
+    border: 1px solid #eb00b0; }
+  div.password-protected-section label.gps-error {
+    color: #9e0077; }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,18 @@
+/*
+    This holds styling used by this plugin in the administration section
+ 
+    Created on : Jun 30, 2014, 4:53:18 PM
+    Author     : Patrick Jackson, Golden Path Solutions
+*/
+#gps_password_meta h4 {
+  margin-bottom: 0; }
+#gps_password_meta .field-section {
+  margin-bottom: 10px; }
+#gps_password_meta .field-description {
+  font-style: italic;
+  line-height: 1.25em;
+  margin: 5px 10px; }
+#gps_password_meta input {
+  margin-left: 10px; }
+
+/*# sourceMappingURL=style-admin.css.map */
