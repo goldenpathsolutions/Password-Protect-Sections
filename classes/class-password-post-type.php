@@ -72,6 +72,7 @@ class Password_Custom_Post_Type {
             'menu_position' => 85,
             'supports' =>  array( 'title','editor' ),
             'map_meta_cap' => true,
+            'menu_icon' => 'dashicons-lock',
         ) );
     }
     
@@ -123,7 +124,7 @@ class Password_Custom_Post_Type {
     public function password_meta_view( $post ){
         
         wp_nonce_field( 'save_password_in_password_type', 'gps_password_meta_nonce' );
-        require_once (dirname( __FILE__ ) . '/../views/password_meta_view.php');
+        require_once (dirname( __FILE__ ) . '/../views/password-meta-view.php');
     }
     
     
@@ -134,7 +135,7 @@ class Password_Custom_Post_Type {
      */
     public function save_meta_box_data( $post_id ){
                 
-        // verify this came from the our screen and with proper authorization.
+        // verify this came from our screen and with proper authorization.
         if ( !wp_verify_nonce( $_POST['gps_password_meta_nonce'], 'save_password_in_password_type' )) {
             return $post_id;
         }

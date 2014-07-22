@@ -14,7 +14,8 @@
 
 ?>
 
-<div class="password-protected-section">
+<div class="password-protected-section locked">
+    <div class="lock-icon" title="Enter password to unlock content."><i class="fa fa-lock"></i></div>
     
     <?php if ($password_failed) { 
         echo "<p class='gps-error'>" . $failed_message . "</p>";
@@ -22,12 +23,12 @@
         
     <?php echo $password_post->post_content; ?>
     
-<form action="" method="post">
+<form name="password_protected_section_<?php echo $password_post->ID; ?>" id="password_protected_section_<?php echo $password_post->ID; ?>" action="" method="post">
     
     <?php wp_nonce_field( 'unlock_protected_section_'.$password_post->ID ); ?>
     <label <?php echo $password_failed ? "class='gps-error'" : ""; ?>>Password</label>
     <input type="password" name="gps_section_password" id="gps_section_password_<?php echo $password_post->ID ?>" size="15" <?php echo $password_failed ? "class='gps-error'" : ""; ?> />
-    <button type="submit">Submit</button>
+    <button type="submit">Unlock</button>
     
 </form>
 </div>

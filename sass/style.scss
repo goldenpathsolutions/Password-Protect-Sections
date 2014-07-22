@@ -16,11 +16,12 @@
  *  1. Colors
  *---------------------------------------------------------------------------*/
 
-$replaceContentBackground:LightYellow;
+$lockedContentBackground:LightYellow;
+$unlockedContentBackground: #fdfdfd;
 $errorbackground:#FFEBFA;
 
 /*---------------------------------------------------------------------------
- *  2. Section Replacement Content (locked)
+ *  2. Section Replacement Content
  *
  *  The following styles apply to what is displayed to visitors when a content
  *  section is locked.
@@ -29,27 +30,51 @@ $errorbackground:#FFEBFA;
 
 div.password-protected-section {
     
-    width: 80%;
-    margin-left: 20px;
-    background-color: $replaceContentBackground;
-    border: 1px solid darken($replaceContentBackground, 50%);
-    padding: 10px;
-    
-    form { margin: 10px 0 0;}
-    
-    p { 
-        margin: 0; 
-        line-height: 1.25em;
+    &.locked {
+        
+        //width: 80%;
+        //margin-left: 20px;
+        background-color: $lockedContentBackground;
+        border: 1px solid darken($lockedContentBackground, 50%);
+        padding: 5px 5px 10px;
+
+        form { margin: 10px 0 0;}
+
+        p { 
+            margin: 0; 
+            line-height: 1.25em;
+        }
+
+        label { 
+            font-weight: bold; 
+            margin-right: 10px;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+        
+        .lock-icon {
+            text-align: right;
+            color: darken($lockedContentBackground, 50%);
+            line-height: 1em;
+        }
+        
     }
     
-    label { 
-        font-weight: bold; 
-        margin-right: 10px;
+    &.unlocked {
+        border: darken($unlockedContentBackground, 10%) 1px solid;
+        //border-bottom: darken($unlockedContentBackground, 10%) 1px solid;
+        background-color: $unlockedContentBackground;
+        padding: 5px;
+        
+        .relock-link {
+            display: block;
+            text-align: right;
+            color: darken($unlockedContentBackground, 10%);
+        }
     }
     
-    button {
-        margin-left: 10px;
-    }
     
     /* Error State */
     

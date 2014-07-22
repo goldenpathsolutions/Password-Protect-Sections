@@ -15,29 +15,40 @@
  *  1. Colors
  *---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------
- *  2. Section Replacement Content (locked)
+ *  2. Section Replacement Content
  *
  *  The following styles apply to what is displayed to visitors when a content
  *  section is locked.
  *
  *---------------------------------------------------------------------------*/
 div.password-protected-section {
-  width: 80%;
-  margin-left: 20px;
-  background-color: lightyellow;
-  border: 1px solid #e0e000;
-  padding: 10px;
   /* Error State */ }
-  div.password-protected-section form {
-    margin: 10px 0 0; }
-  div.password-protected-section p {
-    margin: 0;
-    line-height: 1.25em; }
-  div.password-protected-section label {
-    font-weight: bold;
-    margin-right: 10px; }
-  div.password-protected-section button {
-    margin-left: 10px; }
+  div.password-protected-section.locked {
+    background-color: lightyellow;
+    border: 1px solid #e0e000;
+    padding: 5px 5px 10px; }
+    div.password-protected-section.locked form {
+      margin: 10px 0 0; }
+    div.password-protected-section.locked p {
+      margin: 0;
+      line-height: 1.25em; }
+    div.password-protected-section.locked label {
+      font-weight: bold;
+      margin-right: 10px; }
+    div.password-protected-section.locked button {
+      margin-left: 10px; }
+    div.password-protected-section.locked .lock-icon {
+      text-align: right;
+      color: #e0e000;
+      line-height: 1em; }
+  div.password-protected-section.unlocked {
+    border: #e4e4e4 1px solid;
+    background-color: #fdfdfd;
+    padding: 5px; }
+    div.password-protected-section.unlocked .relock-link {
+      display: block;
+      text-align: right;
+      color: #e4e4e4; }
   div.password-protected-section p.gps-error {
     padding: 5px;
     margin-bottom: 5px; }

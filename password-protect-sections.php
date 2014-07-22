@@ -19,8 +19,11 @@ class Password_Protect_Sections {
         register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
         register_uninstall_hook( __FILE__, array( &$this, 'uninstall' ) );
         
-        //This plugin uses session variables, so initialize sessions
+        //This plugin uses session variables, so initialize sessions on every page load
         add_action('init', array( &$this, 'register_session' ) );
+        
+        //Load font awesome if something else hasn't already done so
+        add_action('wp_enqueue_scripts', array( &$this, 'check_font_awesome'), 99999);
         
         
         //Add a Custom Post Type for Password Objects
@@ -60,8 +63,26 @@ class Password_Protect_Sections {
     }
     
     public function register_session(){
+        
         if( !session_id() )
             session_start();
+    }
+    
+    /**
+     * We want to use font awesome for somet thing, but don't want to cause
+     * conflicts, so check to make sure something else hasn't loaded it already.
+     * 
+     * Thanks G.M.!
+     * http://wordpress.stackexchange.com/questions/121273/how-to-check-if-a-stylesheet-is-already-loaded
+     */
+    function check_font_awesome() {
+      global $wp_styles;
+      $srcs = array_map('basename', (array) wp_list_pluck($wp_styles->registered, 'src') );
+      if ( in_array('font-awesome.css', $srcs) || in_array('font-awesome.min.css', $srcs)  ) {
+        /* echo 'font-awesome.css registered'; */
+      } else {
+        wp_enqueue_style('font-awesome', plugins_url() . '/password-protect-sections/css/font-awesome.min.css' );
+      }
     }
     
 }
