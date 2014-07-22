@@ -9,6 +9,7 @@
  * Note that WP_Post object is available as $post
  * 
  * Author: Patrick Jackson, Golden Path Solutions
+ * Author URL: http://www.goldenpathsolutions.com
  * Created: 2014-06-25
  * 
  */
