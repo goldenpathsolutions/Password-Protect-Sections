@@ -73,6 +73,8 @@ div.password-protected-section {
             text-align: right;
             color: darken($unlockedContentBackground, 10%);
         }
+        
+        form { margin: 0; }
     }
     
     

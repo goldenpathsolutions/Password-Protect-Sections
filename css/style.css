@@ -49,6 +49,8 @@ div.password-protected-section {
       display: block;
       text-align: right;
       color: #e4e4e4; }
+    div.password-protected-section.unlocked form {
+      margin: 0; }
   div.password-protected-section p.gps-error {
     padding: 5px;
     margin-bottom: 5px; }
