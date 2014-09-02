@@ -15,9 +15,9 @@ class Password_Protect_Sections {
     function __construct(){
         
         //Handle plugin installation/uninstallation
-        register_activation_hook( __FILE__, array( &$this, 'activate' ) );
-        register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
-        register_uninstall_hook( __FILE__, array( &$this, 'uninstall' ) );
+        register_activation_hook( __FILE__, array( 'Password_Protect_Sections', 'activate' ) );
+        register_deactivation_hook( __FILE__, array( 'Password_Protect_Sections', 'deactivate' ) );
+        register_uninstall_hook( __FILE__, array( 'Password_Protect_Sections', 'uninstall' ) );
         
         //This plugin uses session variables, so initialize sessions on every page load
         add_action('init', array( &$this, 'register_session' ) );
@@ -42,7 +42,7 @@ class Password_Protect_Sections {
      * Do this when plugin is activated.
      * Create custom database tables/fields here
      */
-    public function activate(){
+    public static function activate(){
         
     }
     
@@ -50,7 +50,7 @@ class Password_Protect_Sections {
      * Do this when plugin is deactivated
      * Do any cleanup required if plugin is deactivated (but not deleted)
      */
-    public function deactivate(){
+    public static function deactivate(){
         
     }
     
@@ -58,7 +58,7 @@ class Password_Protect_Sections {
      * Do this when plugin is uninstalled
      * Do any cleanup when plugin is deleted
      */
-    public function uninstall(){
+    public static function uninstall(){
         
     }
     
