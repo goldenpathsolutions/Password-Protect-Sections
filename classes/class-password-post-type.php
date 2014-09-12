@@ -138,8 +138,7 @@ class Password_Custom_Post_Type {
     public function save_meta_box_data( $post_id ){
                 
         // verify this came from our screen and with proper authorization.
-        if ( isset( $_POST['gps_password_meta_nonce'] ) &&
-                ! wp_verify_nonce( $_POST['gps_password_meta_nonce'], 
+        if ( ! wp_verify_nonce( filter_input(INPUT_POST, 'gps_password_meta_nonce' ), 
                         'save_password_in_password_type' )) {
             return $post_id;
         }
@@ -160,13 +159,14 @@ class Password_Custom_Post_Type {
         // By now we're authenticated; we need to find and save the data  
         $post = get_post($post_id);
         if ($post->post_type == 'gps_password') {
-            
-            if ( isset( $_POST['password_input'] ) ){
-                update_post_meta($post_id, '_gps_password', $_POST['password_input'] );
+            $password_input = filter_input(INPUT_POST, 'password_input' );
+            if ( $password_input ){
+                update_post_meta($post_id, '_gps_password', $password_input );
             }
             
-            if (isset( $_POST['password_failed_message'] ) ){
-                update_post_meta( $post_id, '_gps_password_failed_message', $_POST['password_failed_message'] );
+            $password_failed_message = filter_input(INPUT_POST, 'password_failed_message' );
+            if ( $password_failed_message ){
+                update_post_meta( $post_id, '_gps_password_failed_message', $password_failed_message );
             }
         }
         
