@@ -32,5 +32,5 @@
 <div class="field-section">
     <h4>Failed Password Message</h4>
     <p class="field-description">Enter the message used if a visitor enters the wrong password</p>
-    <input type='text' name='password_failed_message' id='password_failed_message' size="80" maxlength="1024"value='<?php echo $failed_message ?>'/>
+    <input type='text' name='password_failed_message' id='password_failed_message' maxlength="1024"value='<?php echo $failed_message ?>'/>
 </div>

@@ -24,7 +24,11 @@
     }
     
     input {
-        margin-left: 10px;
+        margin: 0 10px;
+    }
+    
+    #password_failed_message {
+        width: 95%;
     }
     
 }

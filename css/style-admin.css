@@ -13,6 +13,8 @@
   line-height: 1.25em;
   margin: 5px 10px; }
 #gps_password_meta input {
-  margin-left: 10px; }
+  margin: 0 10px; }
+#gps_password_meta #password_failed_message {
+  width: 95%; }
 
 /*# sourceMappingURL=style-admin.css.map */
