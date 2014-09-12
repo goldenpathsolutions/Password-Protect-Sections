@@ -42,6 +42,10 @@ class Password_Protect_Sections {
         require_once( 'classes/class-password-shortcode-handler.php' );
         $password_shortcode_handler = new Password_Shortcode_Handler();
         
+        //Add settings page
+        require_once( 'classes/class-password-settings-handler.php');
+        $password_settings_handler = new Password_Settings_Handler();
+        
         
     }
     
