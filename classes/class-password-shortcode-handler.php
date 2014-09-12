@@ -1,23 +1,32 @@
 <?php
-/* 
+/** 
  * Password Shortcode Handler
  * 
  * This class manages the shortcode used by this plugin
  * 
- * [gps-password title='<title of password>'] Protected Content [/gps-password]
+ * <code>[gps-password title='<title of password>'] Protected Content [/gps-password]</code>
+ * 
+ * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
+ * @copyright (c) 2014, Golden Path Solutions, Inc.
+ * @link http://www.goldenpathsolutions.com
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * @package password-protect-sections
+ * 
  */
 class Password_Shortcode_Handler {
         
     function __construct() {
         
         //register the style
-        add_action('wp_enqueue_scripts', array(&$this, 'enqueue_style'));
+        add_action('wp_enqueue_scripts', array('Password_Shortcode_Handler', 'enqueue_style'));
         
         //Add the shortcode
-        add_shortcode( 'gps-password', array( &$this, 'gps_password_shortcode') );
+        add_shortcode( 'gps-password', array( 'Password_Shortcode_Handler', 'gps_password_shortcode') );
     }
     
-    public function enqueue_style(){
+    public static function enqueue_style(){
         wp_enqueue_style( 'gps_password_style', plugins_url('password-protect-sections/css/style.css'));
     }
     
@@ -25,7 +34,7 @@ class Password_Shortcode_Handler {
      * Starting point for all the work done by this shortcode
      * @param type $attributes
      */
-    public function gps_password_shortcode( $attributes_in, $content = null ){
+    public static function gps_password_shortcode( $attributes_in, $content = null ){
         
         $unlocked = false;
         $password_entered = false;
@@ -57,7 +66,7 @@ class Password_Shortcode_Handler {
         if ( isset( $_POST['gps_section_password'] ) ){
             
             $password_entered = true;
-            $unlocked = $this->handle_password_submission( $password_post, 
+            $unlocked = self::handle_password_submission( $password_post, 
                     $_POST['gps_section_password'] );
         
             
@@ -66,22 +75,22 @@ class Password_Shortcode_Handler {
         
         $hide_content = !$unlocked; //don't hide content if unlocked
        
-        return $hide_content ? $this->get_replacement_content( $password_post, 
+        return $hide_content ? self::get_replacement_content( $password_post, 
                 $content, $password_entered && !$unlocked, $unlocked ) 
-                : do_shortcode( $this->get_replacement_content($password_post, 
+                : do_shortcode( self::get_replacement_content($password_post, 
                         $content, false, $unlocked) );
           
     }
     
-    private function get_replacement_content( $password_post, $content = null, 
+    private static function get_replacement_content( $password_post, $content = null, 
             $password_failed, $unlocked ){
         
         ob_start();
         
         if ( $unlocked){ 
-            $template_file = $this->find_template_file( "/password-protect-sections-unlocked-template.php" );
+            $template_file = self::find_template_file( "/password-protect-sections-unlocked-template.php" );
         } else {
-            $template_file = $this->find_template_file ( "/password-protect-sections-locked-template.php" );
+            $template_file = self::find_template_file ( "/password-protect-sections-locked-template.php" );
         }
         
         require_once( $template_file );
@@ -90,7 +99,7 @@ class Password_Shortcode_Handler {
         
     }
     
-    private function find_template_file( $default_template_file_name ){        
+    private static function find_template_file( $default_template_file_name ){        
         
         //first, check the child theme first.  
         //If no child, it'll just return the active theme
@@ -109,7 +118,7 @@ class Password_Shortcode_Handler {
         
     }
     
-    private function handle_password_submission( $password_post, $password ){
+    private static function handle_password_submission( $password_post, $password ){
         
         // verify this came from a real user and not a hacker
         if ( !wp_verify_nonce( $_POST['_wpnonce'], 'unlock_protected_section_'.$password_post->ID ))
