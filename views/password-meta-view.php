@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/** 
  * Password Meta View
  * 
  * This contains the information for rendering the view for the 
@@ -8,8 +7,8 @@
  * 
  * Note that WP_Post object is available as $post
  * 
- * Author: Patrick Jackson, Golden Path Solutions
- * Author URL: http://www.goldenpathsolutions.com
+ * @author: Patrick Jackson, Golden Path Solutions
+ * @url: http://www.goldenpathsolutions.com
  * Created: 2014-06-25
  * 
  */
@@ -19,7 +18,8 @@
     $stored_message = get_post_meta( $post->ID, '_gps_password_failed_message', true);
     
     //message used when wrong password is entered
-    $failed_message = $stored_message ? $stored_message : "The password you entered did not match the one on record for this section";
+    $failed_message = $stored_message ? $stored_message : 
+            "The password you entered did not match the one on record for this section";
 
 ?>
 

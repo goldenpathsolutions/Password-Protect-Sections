@@ -37,11 +37,11 @@ class Password_Custom_Post_Type {
     }
     
     /**
-     * Defines the Password custom Post Type
+     * Define the Password custom Post Type
      */
     public function create_post_type() {
         
-        //first define the capabilities in the context of this post type
+        //define the capabilities in the context of this post type
         $capabilities = array(
             'publish_posts' => 'publish_password',
             'edit_posts' => 'edit_password',
@@ -63,7 +63,8 @@ class Password_Custom_Post_Type {
         
 	register_post_type( 'gps_password', array (
             'labels' => $labels,
-            'description' => 'A Password instance uniformly applies protection to all sections of content surrounded by the shortcode tags with that Password\'s ID',
+            'description' => 'A Password instance applies protection to all ' .
+                             'sections of content surrounded by that Password\'s shortcode',
             'public' => false,
             'has_archive' => false,
             'show_ui' => true,
@@ -71,7 +72,7 @@ class Password_Custom_Post_Type {
             'capabilities'=> $capabilities,
             'menu_position' => 85,
             'supports' =>  array( 'title','editor' ),
-            'map_meta_cap' => true,
+            //'map_meta_cap' => true,
             'menu_icon' => 'dashicons-lock',
         ) );
     }
@@ -96,8 +97,9 @@ class Password_Custom_Post_Type {
      * Password post type admin UI
      */
     public function manage_ui_access(){
-        if( !current_user_can( 'publish_password' ) )
+        if( !current_user_can( 'publish_password' ) ){
             remove_menu_page( 'edit.php?post_type=gps_password' );
+        }
     }
     
     /**
@@ -107,12 +109,12 @@ class Password_Custom_Post_Type {
     public function add_meta_box(){
         
         add_meta_box(
-                'gps_password_meta',
-                __( 'Section Password', 'gps_password'),
-                array( &$this, 'password_meta_view'),
-                'gps_password',
-                'normal',
-                'high'
+            'gps_password_meta',
+            __( 'Section Password', 'gps_password'),
+            array( &$this, 'password_meta_view'),
+            'gps_password',
+            'normal',
+            'high'
         );
         
     }
@@ -136,27 +138,38 @@ class Password_Custom_Post_Type {
     public function save_meta_box_data( $post_id ){
                 
         // verify this came from our screen and with proper authorization.
-        if ( !wp_verify_nonce( $_POST['gps_password_meta_nonce'], 'save_password_in_password_type' )) {
+        if ( isset( $_POST['gps_password_meta_nonce'] ) &&
+                ! wp_verify_nonce( $_POST['gps_password_meta_nonce'], 
+                        'save_password_in_password_type' )) {
             return $post_id;
         }
         
         
-        // verify if this is an auto save routine. If it is our form has not been submitted, so we dont want to do anything
+        /*
+         * verify if this is an auto save routine. If it is our form has not been submitted, 
+         * so we dont want to do anything
+         */
         if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
             return $post_id;
 
         // Check permissions
-        if ( !current_user_can( 'edit_password', $post_id ) )
+        if ( ! current_user_can( 'edit_password', $post_id ) )
             return $post_id;
 
 
-        // OK, we're authenticated: we need to find and save the data  
+        // By now we're authenticated; we need to find and save the data  
         $post = get_post($post_id);
         if ($post->post_type == 'gps_password') {
-
-            update_post_meta($post_id, '_gps_password', $_POST['password_input'] );
-            update_post_meta($post_id, '_gps_password_failed_message', $_POST['password_failed_message']);
+            
+            if ( isset( $_POST['password_input'] ) ){
+                update_post_meta($post_id, '_gps_password', $_POST['password_input'] );
+            }
+            
+            if (isset( $_POST['password_failed_message'] ) ){
+                update_post_meta( $post_id, '_gps_password_failed_message', $_POST['password_failed_message'] );
+            }
         }
+        
         return $post_id;
     }
     

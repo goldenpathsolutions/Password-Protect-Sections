@@ -41,36 +41,48 @@ class Password_Shortcode_Handler {
         
         //first, check to see if we're relocking
         if ( isset( $_POST['relock_protected_section'] ) ){
+            
             //verify the nonce
-            if (wp_verify_nonce( $_POST['_wpnonce'], 'relock_protected_section_'.$password_post->ID )){
-                unset($_SESSION['gps_password_' . $password_post->ID . '_authenticated']);
+            if ( isset( $_POST['_wpnonce'] ) && 
+                    wp_verify_nonce( $_POST['_wpnonce'], 
+                            'relock_protected_section_'.$password_post->ID )){
+                unset( $_SESSION['gps_password_' . $password_post->ID . 
+                    '_authenticated'] );
             }
+            
         }
-        
         
         
         //check to see is we're handling a password submission
         if ( isset( $_POST['gps_section_password'] ) ){
+            
             $password_entered = true;
-            $unlocked = $this->handle_password_submission( $password_post, $_POST['gps_section_password'] );
+            $unlocked = $this->handle_password_submission( $password_post, 
+                    $_POST['gps_section_password'] );
+        
+            
         } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) )
                 $unlocked = true;
         
         $hide_content = !$unlocked; //don't hide content if unlocked
        
-        return $hide_content ? $this->get_replacement_content( $password_post, $content, $password_entered && !$unlocked, $unlocked ) 
-                : do_shortcode( $this->get_replacement_content($password_post, $content, false, $unlocked) );
+        return $hide_content ? $this->get_replacement_content( $password_post, 
+                $content, $password_entered && !$unlocked, $unlocked ) 
+                : do_shortcode( $this->get_replacement_content($password_post, 
+                        $content, false, $unlocked) );
           
     }
     
-    private function get_replacement_content( $password_post, $content = null, $password_failed, $unlocked ){
+    private function get_replacement_content( $password_post, $content = null, 
+            $password_failed, $unlocked ){
         
         ob_start();
         
-        if ( $unlocked)
+        if ( $unlocked){ 
             $template_file = $this->find_template_file( "/password-protect-sections-unlocked-template.php" );
-        else
+        } else {
             $template_file = $this->find_template_file ( "/password-protect-sections-locked-template.php" );
+        }
         
         require_once( $template_file );
         
