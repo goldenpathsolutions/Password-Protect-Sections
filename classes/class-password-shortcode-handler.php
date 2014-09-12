@@ -40,9 +40,9 @@ class Password_Shortcode_Handler {
         if ( !$password_post )  return do_shortcode($content);
         
         //first, check to see if we're relocking
-        if ( $_POST['relock_protected_section'] ){
+        if ( isset( $_POST['relock_protected_section'] ) ){
             //verify the nonce
-            if ( wp_verify_nonce( $_POST['_wpnonce'], 'relock_protected_section_'.$password_post->ID )){
+            if (wp_verify_nonce( $_POST['_wpnonce'], 'relock_protected_section_'.$password_post->ID )){
                 unset($_SESSION['gps_password_' . $password_post->ID . '_authenticated']);
             }
         }
@@ -50,10 +50,10 @@ class Password_Shortcode_Handler {
         
         
         //check to see is we're handling a password submission
-        if ( $_POST['gps_section_password'] ){
+        if ( isset( $_POST['gps_section_password'] ) ){
             $password_entered = true;
             $unlocked = $this->handle_password_submission( $password_post, $_POST['gps_section_password'] );
-        } else if ( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] )
+        } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) )
                 $unlocked = true;
         
         $hide_content = !$unlocked; //don't hide content if unlocked
