@@ -9,8 +9,8 @@
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2014, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.0.1
+ * @since 0.1.3
  *
  * @package password-protect-sections
  * 
@@ -60,11 +60,25 @@ class Password_Shortcode_Handler {
                     '_authenticated'] );
             }
         }
-        
-        
+                        
         //check to see if we're handling a password submission
         $gps_section_password = filter_input(INPUT_POST, 'gps_section_password' );
-        if ( $gps_section_password) {
+        
+        /*
+         * Make sure password entered was for this password object.
+         * Handles case where different password shortcodes are on one page.
+         * To do this, handle the nonce.  If it returns false, assume
+         * the password in the form submission is irrelevant for this password
+         * shortcode, and ignore it.
+         */
+        if ( !wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), 'unlock_protected_section_'.$password_post->ID )){
+            $gps_section_password = null;
+        }
+            
+        if ( $gps_section_password ) {
+            
+            
+            
             
             $password_entered = true;
             $unlocked = self::handle_password_submission( $password_post, $gps_section_password );
@@ -122,10 +136,6 @@ class Password_Shortcode_Handler {
     
     private static function handle_password_submission( $password_post, $password ){
         
-        // verify this came from a real user and not a hacker
-        if ( !wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), 'unlock_protected_section_'.$password_post->ID )){
-            return $password_post->ID;
-        }
         
         $stored_password = get_post_meta( $password_post->ID, '_gps_password', true);
         
