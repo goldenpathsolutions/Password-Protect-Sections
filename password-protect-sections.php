@@ -27,10 +27,10 @@ class Password_Protect_Sections {
         register_uninstall_hook( __FILE__, array( 'Password_Protect_Sections', 'uninstall' ) );
         
         //This plugin uses session variables, so initialize sessions on every page load
-        add_action('init', array( &$this, 'register_session' ) );
+        add_action('init', array( 'Password_Protect_Sections', 'register_session' ) );
         
         //Load font awesome if something else hasn't already done so
-        add_action('wp_enqueue_scripts', array( &$this, 'check_font_awesome'), 99999);
+        add_action('wp_enqueue_scripts', array( 'Password_Protect_Sections', 'check_font_awesome'), 99999);
         
         
         //Add a Custom Post Type for Password Objects
@@ -73,7 +73,7 @@ class Password_Protect_Sections {
         
     }
     
-    public function register_session(){
+    public static function register_session(){
         
         if( !session_id() ){
             session_start();
@@ -87,13 +87,13 @@ class Password_Protect_Sections {
      * Thanks G.M.!
      * http://wordpress.stackexchange.com/questions/121273/how-to-check-if-a-stylesheet-is-already-loaded
      */
-    function check_font_awesome() {
+    public static function check_font_awesome() {
         
       global $wp_styles;
       
       $srcs = array_map('basename', (array) wp_list_pluck($wp_styles->registered, 'src') );
       
-      if ( ! ( in_array('font-awesome.css', $srcs) &&  in_array('font-awesome.min.css', $srcs) )  ) {
+      if ( ! ( in_array('font-awesome.css', $srcs) || in_array('font-awesome.min.css', $srcs) )  ) {
         wp_enqueue_style('font-awesome', plugins_url() . '/password-protect-sections/css/font-awesome.min.css' );
       }
       
