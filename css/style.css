@@ -10,21 +10,30 @@
 
     1. Colors
     2. Section Replacement Content (locked)
+    3. Section Content (unlocked)
+    4. Validation Markup
 */
 /*---------------------------------------------------------------------------
  *  1. Colors
  *---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------
- *  2. Section Replacement Content
+ *  2. Section Replacement Content (Locked)
  *
- *  The following styles apply to what is displayed to visitors when a content
- *  section is locked.
- *
+ *  Applied to replacement content when a section is locked.
  *---------------------------------------------------------------------------*/
 div.password-protected-section {
-  /* Error State */ }
+  /*------------------------------------------------------------------------
+   *  3. Section Content (Unlocked)
+   *
+   *  Applied to the protected content after being unlocked
+   *-----------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+   *  4. Validation Markup
+   *
+   *  Applied to form elements when a mistake is made
+   *-----------------------------------------------------------------------*/ }
   div.password-protected-section.locked {
-    background-color: lightyellow;
+    background-color: LightYellow;
     border: 1px solid #e0e000;
     padding: 5px 5px 10px; }
     div.password-protected-section.locked form {

@@ -1,34 +1,86 @@
 /*
     This holds styling used by this plugin in the administration section
  
-    Created on : Jun 30, 2014, 4:53:18 PM
+    
     Author     : Patrick Jackson, Golden Path Solutions
+    Version    : 1.0.0
+    Created    : 2014-06-30
+    Modified   : 2014-10-02
 */
 
-#gps_password_meta{
-    
+@import "_variables.scss";
+
+.center{
+    text-align: center;
+}
+
+.gps-password-settings {
         
-    h4 { 
-        //text-decoration: underline; 
-        margin-bottom: 0;
-    }
-   
-    .field-section {
-        margin-bottom: 10px;
+    .content {
+        max-width: 63%;
+        min-width: 300px;
+        margin-right: 1.5%;
     }
     
-    .field-description {
-        font-style: italic;
-        line-height: 1.25em;
-        margin: 5px 10px;
+    .sidebar {
+        //width: 30%;
+        width: 33%;
+        min-width: 300px;
+        float: right;
+        margin: 0 20px;
+        overflow: hidden;
+        background-color: $offWhite;
+        
+        &.mobile{ display: none; }
+        
+        @media only screen and (max-width: $vgaWidth){
+            
+            &.desktop{ display: none; }
+            
+            &.mobile{ 
+                display: block; 
+                float: none;
+                margin: 20px auto;
+            }
+            
+        }
+        
+        a{
+            text-decoration: none;
+        }
+        
+        .sidebar-content{
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: $white;
+            border: $ltGray 1px solid;
+            
+            h3{
+                margin: 0 auto 10px;
+            }
+            
+            .social {
+                display: inline-block;
+                margin-left: 10%;
+                
+                .fa {
+                    display: inline-block;
+                    font-size: 1.5em;
+                    margin: 10px;
+                }
+            }
+        }
+        
+        .sidebar-title{
+            border-bottom: $ltGray 1px solid;
+        }
+        
+        .sidebar-description{
+            padding: 10px;
+        }
+        
+        #gps-logo{
+            width: 100%;
+        }
     }
-    
-    input {
-        margin: 0 10px;
-    }
-    
-    #password_failed_message {
-        width: 95%;
-    }
-    
 }
