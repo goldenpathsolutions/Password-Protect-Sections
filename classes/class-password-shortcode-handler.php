@@ -19,10 +19,10 @@ class Password_Shortcode_Handler {
         
     function __construct() {
         
-        //register the style
+        // register the style
         add_action('wp_enqueue_scripts', array('Password_Shortcode_Handler', 'enqueue_style'));
         
-        //Add the shortcode
+        // Add the shortcode
         add_shortcode( 'gps-password', array( 'Password_Shortcode_Handler', 'gps_password_shortcode') );
     }
     
