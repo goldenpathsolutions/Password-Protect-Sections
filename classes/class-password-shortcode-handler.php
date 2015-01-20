@@ -46,7 +46,7 @@ class Password_Shortcode_Handler {
         $password_post = get_page_by_title( $atts['title'], null, 'gps_password' );
         
         //if we can't find a password, then don't try to protect the content
-        if ( !$password_post )  return do_shortcode($content);
+        if ( ! isset( $password_post ) )  return do_shortcode($content);
         
         //check to see if we're relocking
         $relock_protected_section = filter_input( INPUT_POST, 'relock_protected_section' );
@@ -75,10 +75,7 @@ class Password_Shortcode_Handler {
             $gps_section_password = null;
         }
             
-        if ( $gps_section_password ) {
-            
-            
-            
+        if ( isset( $gps_section_password ) ) {
             
             $password_entered = true;
             $unlocked = self::handle_password_submission( $password_post, $gps_section_password );
