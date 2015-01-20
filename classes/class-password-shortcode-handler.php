@@ -80,7 +80,7 @@ class Password_Shortcode_Handler {
             $password_entered = true;
             $unlocked = self::handle_password_submission( $password_post, $gps_section_password );
             
-            // try reloading the page here rather than exposing the content
+            // reload the page here on password submission
             wp_redirect( get_permalink() );
             exit;
             
@@ -88,7 +88,7 @@ class Password_Shortcode_Handler {
             $unlocked = true;
         }
         
-        $hide_content = !$unlocked; //don't hide content if unlocked
+        $hide_content = !$unlocked; // don't hide content if unlocked
         
         return $hide_content ? self::get_replacement_content( $password_post, 
                 $content, $password_entered && !$unlocked, $unlocked ) 
@@ -100,6 +100,14 @@ class Password_Shortcode_Handler {
     private static function get_replacement_content( $password_post, $content = null, 
             $password_failed, $unlocked ){
         
+        global $password_failed; 
+        
+        if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_failed'] ) 
+                && $_SESSION['gps_password_' . $password_post->ID . '_failed'] ){
+            
+            $password_failed = true;
+        }
+        
         ob_start();
         
         if ( $unlocked ){ 
@@ -109,6 +117,11 @@ class Password_Shortcode_Handler {
         }
         
         require( $template_file );
+        
+        // clear the password failed session var so it only shows once.
+        if ( $password_failed ) {
+            $_SESSION['gps_password_' . $password_post->ID . '_failed'] = false;
+        }
         
         return ob_get_clean();
         
@@ -144,6 +157,9 @@ class Password_Shortcode_Handler {
         
         if ( $authenticated ){
             $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] = true;
+            $_SESSION['gps_password_' . $password_post->ID . '_failed'] = false;
+        } else {
+            $_SESSION['gps_password_' . $password_post->ID . '_failed'] = true;
         }
         
         return $authenticated;

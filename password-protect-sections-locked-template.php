@@ -10,6 +10,8 @@
  * 
  */
 
+global $password_failed;
+
     $failed_message = get_post_meta( $password_post->ID, '_gps_password_failed_message', true);
 
 ?>
