@@ -9,8 +9,8 @@
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2014, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.0.1
- * @since 0.1.3
+ * @version 1.0.2
+ * @since 0.1.4
  *
  * @package password-protect-sections
  * 

@@ -6,14 +6,14 @@
  * Plugin URI: http://wordpress.org/extend/plugins/password-protect-sections   
  * Description: Password protect sections of content within a post
  * Author: Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author URI: http://www.goldenpathsolutions.com
  * License: GPLv2
  * 
  * 
  * @category password-protect-sections
  * @author Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * @version 0.1.3
+ * @version 0.1.4
  * 
  */
 
