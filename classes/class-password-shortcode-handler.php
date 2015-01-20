@@ -79,13 +79,17 @@ class Password_Shortcode_Handler {
             
             $password_entered = true;
             $unlocked = self::handle_password_submission( $password_post, $gps_section_password );
-        
+            
+            // try reloading the page here rather than exposing the content
+            wp_redirect( get_permalink() );
+            exit;
+            
         } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
             $unlocked = true;
         }
         
         $hide_content = !$unlocked; //don't hide content if unlocked
-       
+        
         return $hide_content ? self::get_replacement_content( $password_post, 
                 $content, $password_entered && !$unlocked, $unlocked ) 
                 : do_shortcode( self::get_replacement_content( $password_post, 
