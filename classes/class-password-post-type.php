@@ -1,10 +1,18 @@
 <?php
 
-/* 
+/** 
  * This class contains the Password custom post type and related functions
+ * 
+ * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
+ * @copyright (c) 2015, Golden Path Solutions, Inc.
+ * @link http://www.goldenpathsolutions.com
+ * @version 1.1.0
+ * @since 0.1.0
+ *
+ * @package password-protect-sections
  */
 
-class Password_Custom_Post_Type {
+class Password_Post_Type {
     
     var $capability = "edit_passwords";
     
@@ -31,7 +39,27 @@ class Password_Custom_Post_Type {
         
     }
     
+    /**
+     * 
+     * @param {string} $password_post_name
+     * @return {object}
+     */
+    public static function get_password_post_by_name($password_post_name){
+        return get_page_by_title( $password_post_name, null, 'gps_password' );
+    }
     
+    /**
+     * 
+     * @param {int} $password_post_id
+     * @return {object}
+     */
+    public static function get_password_post_by_id($password_post_id){
+        return get_post( $password_post_id );
+    }
+    
+    /**
+     * 
+     */
     public function enqueue_admin_style(){
         wp_enqueue_style( 'gps_password_admin_style', plugins_url('password-protect-sections/css/style-admin.css') );
     }
@@ -145,7 +173,7 @@ class Password_Custom_Post_Type {
         
         
         /*
-         * verify if this is an auto save routine. If it is our form has not been submitted, 
+         * verify if this is an auto save routine. If it is, our form has not been submitted, 
          * so we dont want to do anything
          */
         if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
@@ -171,6 +199,28 @@ class Password_Custom_Post_Type {
         }
         
         return $post_id;
+    }
+    
+    /**
+     * Get Protected Content
+     * 
+     * Retrieves the content contained by this password's shortcode in the given
+     * post.  Returns the empty string if nothing found.
+     * 
+     * 
+     * @param {int} $post_id
+     * @return {string} content protected by this password shortcode on the given post
+     */
+    public function get_protected_content( $post_id ){
+        
+        $protected_post = get_post( $post_id );
+        
+        // return empty string if the shortcode isn't in the content
+        if ( ! has_shortcode( $protected_post->post_content, 'gps_password' ) ){
+            return '';
+        }
+        
+        $shortcode_start = preg_match( '#[your-shortcode-heres*.*?]#s', $protected_post->post_content, $matches );
     }
     
 }
