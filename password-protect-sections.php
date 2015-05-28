@@ -6,14 +6,14 @@
  * Plugin URI: http://wordpress.org/extend/plugins/password-protect-sections   
  * Description: Password protect sections of content within a post
  * Author: Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * Version: 0.1.4
+ * Version: 0.2.0
  * Author URI: http://www.goldenpathsolutions.com
  * License: GPLv2
  * 
  * 
  * @category password-protect-sections
  * @author Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * @version 0.1.4
+ * @version 0.2.0
  * 
  */
 
@@ -26,16 +26,17 @@ class Password_Protect_Sections {
         register_deactivation_hook( __FILE__, array( 'Password_Protect_Sections', 'deactivate' ) );
         register_uninstall_hook( __FILE__, array( 'Password_Protect_Sections', 'uninstall' ) );
         
-        //This plugin uses session variables, so initialize sessions on every page load
-        add_action('init', array( 'Password_Protect_Sections', 'register_session' ) );
+        // This plugin uses session variables, so initialize sessions
+        add_action('init', array( 'Password_Protect_Sections', 'register_session', 1 ) );
         
-        //Load font awesome if something else hasn't already done so
+        
+        // Load font awesome if something else hasn't already done so
         add_action('wp_enqueue_scripts', array( 'Password_Protect_Sections', 'check_font_awesome'), 99999);
         
         
         //Add a Custom Post Type for Password Objects
         require_once ( 'classes/class-password-post-type.php' );
-        $password_post_type = new Password_Custom_Post_Type();
+        $password_post_type = new Password_Post_Type();
         
         
         //Add shortcode handler
