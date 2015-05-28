@@ -1,6 +1,8 @@
 /*
     Contains default styling for this plugin
 
+    version 1.0.2
+
     Created on : Jun 24, 2014, 11:00:15 AM
     Author     : Patrick Jackson <pjackson@goldenpathsolutions.com, 
                  Golden Path Solutions (www.goldenpathsolutions.com)
@@ -65,6 +67,8 @@ div.password-protected-section {
     margin-bottom: 5px; }
   div.password-protected-section p.gps-error, div.password-protected-section input.gps-error {
     color: #9e0077;
+    font-weight: bold; }
+  div.password-protected-section input.gps-error {
     background-color: #ffebfa;
     border: 1px solid #eb00b0; }
   div.password-protected-section label.gps-error {
