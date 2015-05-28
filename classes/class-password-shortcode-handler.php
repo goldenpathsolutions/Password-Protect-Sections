@@ -80,10 +80,6 @@ class Password_Shortcode_Handler {
             $password_entered = true;
             $unlocked = self::handle_password_submission( $password_post, $gps_section_password );
             
-            // reload the page here on password submission
-            wp_redirect( get_permalink() );
-            exit;
-            
         } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
             $unlocked = true;
         }
