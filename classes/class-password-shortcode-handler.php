@@ -137,11 +137,6 @@ class Password_Shortcode_Handler {
             $authenticator = new Password_Authenticator($password_post);
             $is_authenticated = $authenticator->is_authenticated( $gps_section_password );
                     
-                    
-            // reload the page here on password submission
-            wp_redirect( get_permalink() );
-            exit;
-        
         // otherwise, if there is a session variable that says this password section is unlocked...
         } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
             $is_authenticated = true;
