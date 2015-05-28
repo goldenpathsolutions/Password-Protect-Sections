@@ -13,7 +13,7 @@
  * 
  * @category password-protect-sections
  * @author Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * @version 0.1.4
+ * @version 0.1.5
  * 
  */
 
