@@ -127,42 +127,4 @@ class Password_Shortcode_Handler {
         
     }
     
-    private static function find_template_file( $default_template_file_name ){        
-        
-        //first, check the child theme first.  
-        //If no child, it'll just return the active theme
-        $template_file = get_template_directory() . $default_template_file_name;
-        if ( file_exists($template_file) ){
-            return $template_file;
-        }
-        
-        //second, try the parent theme.
-        //if no parent, this shouldn't be reached, but will return active theme in any case
-        $template_file = get_template_directory() . $default_template_file_name;
-        if (file_exists($template_file)){
-            return $template_file;
-        }
-        
-        //finally choose plugin default
-        return dirname( __FILE__ ) . '/..' . $default_template_file_name;
-        
-    }
-    
-    private static function handle_password_submission( $password_post, $password ){
-        
-        
-        $stored_password = get_post_meta( $password_post->ID, '_gps_password', true);
-        
-        $authenticated = trim($password) === trim($stored_password);
-        
-        if ( $authenticated ){
-            $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] = true;
-            $_SESSION['gps_password_' . $password_post->ID . '_failed'] = false;
-        } else {
-            $_SESSION['gps_password_' . $password_post->ID . '_failed'] = true;
-        }
-        
-        return $authenticated;
-            
-    }
 }
