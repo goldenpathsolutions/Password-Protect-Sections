@@ -11,26 +11,35 @@
     Table of Contents
 
     1. Colors
-    2. Section Replacement Content (locked)
-    3. Section Content (unlocked)
-    4. Validation Markup
+    2. Global
+    3. Section Replacement Content (locked)
+    4. Section Content (unlocked)
+    5. Validation Markup
 */
 /*---------------------------------------------------------------------------
  *  1. Colors
  *---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------
- *  2. Section Replacement Content (Locked)
+ *  2. Global
+ *
+ *  May be applied anywhere
+ *---------------------------------------------------------------------------*/
+img.password-ajax-loading {
+  margin: 0 5px; }
+
+/*---------------------------------------------------------------------------
+ *  3. Section Replacement Content (Locked)
  *
  *  Applied to replacement content when a section is locked.
  *---------------------------------------------------------------------------*/
 div.password-protected-section {
   /*------------------------------------------------------------------------
-   *  3. Section Content (Unlocked)
+   *  4. Section Content (Unlocked)
    *
    *  Applied to the protected content after being unlocked
    *-----------------------------------------------------------------------*/
   /*------------------------------------------------------------------------
-   *  4. Validation Markup
+   *  5. Validation Markup
    *
    *  Applied to form elements when a mistake is made
    *-----------------------------------------------------------------------*/ }

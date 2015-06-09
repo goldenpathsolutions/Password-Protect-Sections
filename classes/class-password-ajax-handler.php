@@ -69,8 +69,11 @@ class Password_Ajax_Handler {
                 array('jquery'), self::$js_version, true);
         
         // make the ajax_url available to the ajax javascript
-	wp_localize_script( 'gps_password_ajax_handler', 'gps_ajax_data',
-            array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+	wp_localize_script( 'gps-password-ajax-handler', 'gps_ajax_data',
+            array( 
+                'ajax_url' => admin_url( 'admin-ajax.php'),
+                'ajax_loader_url' => plugins_url() . "/password-protect-sections/images/ajax-loader.gif" 
+            ));
     }
     
     /**

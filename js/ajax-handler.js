@@ -1,3 +1,6 @@
+/* global gps_ajax_data */
+/* global jQuery */
+
 /** 
  * AJAX Handler for Password Protect Sections plugin
  * 
@@ -8,11 +11,22 @@
  * @version 1.0.0
  * @since 0.2.0
  * 
+ * 
+ * 
  */
 
 var $content_store = [];
 var $locked_section;
 
+// preload ajax gif
+var $loading_image = jQuery('<img class="password-ajax-loading" width="15"'
+        + 'height="15" src="' + gps_ajax_data.ajax_loader_url +'">');
+
+/**
+ * Main function for handling ajax behaviors
+ * 
+ * @param {object} $ The jQuery object
+ */
 jQuery(document).ready(function($) {
     
     var $submit_button = $("form.password-protected-section button[type='submit']"),
@@ -28,10 +42,15 @@ jQuery(document).ready(function($) {
     /**
      * handles submitting form and response via AJAX
      * 
+     * @param {Event} e The click event
      * @since 1.0.0
      */
     function submit_password(e){
         
+        $submit_button.after($loading_image);
+        $password_label.css("padding-left","26px");
+        
+                
         var $this = $(this),
             data = {
                 'action': 'get_password_protected_content',
@@ -72,6 +91,8 @@ jQuery(document).ready(function($) {
         jQuery.post(gps_ajax_data.ajax_url, data, function(response) {
                 handle_password_response( response );
         });
+        // remove loading image
+        $loading_image.detach();
     }
     
     /**
