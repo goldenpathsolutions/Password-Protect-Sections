@@ -25,7 +25,9 @@
  *  May be applied anywhere
  *---------------------------------------------------------------------------*/
 img.password-ajax-loading {
-  margin: 0 5px; }
+  margin: 0 5px;
+  width: 16px !important;
+  height: 16px !important; }
 
 /*---------------------------------------------------------------------------
  *  3. Section Replacement Content (Locked)
