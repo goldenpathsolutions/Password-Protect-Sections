@@ -16,7 +16,6 @@
  */
 
 var $content_store = [];
-var $locked_section;
 
 // preload ajax gif
 var $loading_image = jQuery('<img class="password-ajax-loading" width="15"'
@@ -29,14 +28,45 @@ var $loading_image = jQuery('<img class="password-ajax-loading" width="15"'
  */
 jQuery(document).ready(function($) {
     
-    var $submit_button = $("form.password-protected-section button[type='submit']"),
+    var $section, $submit_button, $relock_link, $password_label;
+        
+    // Don't know whether we're locked or unlocked to start, so initialize both
+    init_submit_button();
+    init_relock();
+    
+    
+    /**
+     * add listeners to submit button and override non-ajax behaviors
+     * 
+     * @since 1.0.0
+     */
+    function init_submit_button(){
+        
+        $section = $("div.password-protected-section");
+        $submit_button = $("form.password-protected-section button[type='submit']"),
+        $password_label = $section.find("label");
+        
+        // add listener to the form submission button
+        $submit_button.click( submit_password );
+    }
+    
+    
+    /**
+     * add listeners to relock link and override non-ajax behaviors
+     * 
+     * @since 1.0.0
+     */
+    function init_relock(){
+        
+        $section = $("div.password-protected-section");
         $relock_link = $("form.password-protected-section a.relock-link");
-    
-    // add listener to the form submission button
-    $submit_button.click( submit_password );
-    
-    // add listener to the relock link
-    $relock_link.click( handle_relock )
+        
+        // remove onclick behavior from relock link
+        $relock_link.attr('onclick',null).off('click');
+
+        // add listener to the relock link
+        $relock_link.click( handle_relock );
+    }
     
     
     /**
@@ -58,41 +88,130 @@ jQuery(document).ready(function($) {
         
         // Don't let the button submit the form.  Do it here.
         e.preventDefault();
-        
+                
         /*
          * add the fields from this instance of the form to the data posted 
          * (a page may have more than one)
          */
         get_form_data( $this.parent("form"), data);
-        //console.log(data); //DEBUG
         
 
         // submit the data via AJAX call
-        jQuery.post(gps_ajax_data.ajax_url, data, function(response, status, jqXHR) {
-                handle_password_response( response, status, jqXHR);
+        jQuery.post(gps_ajax_data.ajax_url, data, function(response ) {
+                handle_password_response( response );
+        }, 'json');
+    }
+    
+    
+    /**
+     * Handle Response after someone submits a password
+     * 
+     * @param {array} response
+     */
+    function handle_password_response( response ){
+        
+        
+        // If the content is empty, try refreshing the page.  There are some
+        // cases where the shortcode content is inaccessible as when the
+        // shortcode lives in a widget or template.
+        if ( response.content && response.content.length === 0 ){
+            window.location.reload();
+            return;
+        }
+        
+        
+        // remove loading image
+        $loading_image.detach();
+        $password_label.css("padding-left","0");
+
+        // if there was an error, show it with validation error markup
+        if (response.error){
+            
+            var $password_input = $section.find("input[name='gps-section-password']");
+            
+            $password_label.before( "<p class='gps-error'>" + response.error + "</p>" );
+            
+            $password_label.addClass("gps-error");
+            $password_input.addClass("gps-error");
+            
+        } else if (response.content){
+            // if content is returned, show it
+            
+            // if the content is not empty, replace the section with it
+            $section.replaceWith( response.content );
+            
+            // remember to add listeners and override non-ajax behaviors to relock
+            // link...
+            init_relock();
+            
+        } else {
+            // otherwise, reload the page.  This will be the case when the
+            // Reload Page option is selected
+            window.location.reload();
+            return;
+        }  
+    }
+    
+    /**
+     * Handle relocking form via AJAX
+     * 
+     * @param {Event} e The click event
+     * @since 1.0.0
+     */
+    function handle_relock(e){
+        
+        $section.find("a.relock-link i").before($loading_image);
+        
+        // don't navigate anywhere on clicking the link
+        e.preventDefault();
+        
+        var $this = $(this),
+            data = {
+                'action': 'get_password_form',
+            };
+            
+        /*
+         * add the fields from this instance of the form to the data posted 
+         * (a page may have more than one)
+         */
+        get_form_data( $this.parent("form"), data);
+
+        // We can also pass the url value separately from ajaxurl for front end 
+        // AJAX implementations
+        jQuery.post(gps_ajax_data.ajax_url, data, function(response) {
+                handle_relock_response( response );
         }, 'json');
     }
     
     /**
-     * handles relocking form via AJAX
+     * Handle Relock Response
      * 
-     * @since 1.0.0
+     * @param {array} response
      */
-    function handle_relock(){
-        var $this = $(this),
-            data = {
-                'action': 'relock_content',
-            };
+    function handle_relock_response( response ){
         
-        // Don't let the link submit the form.  Do it here.
-        e.preventDefault();
-
-        // We can also pass the url value separately from ajaxurl for front end AJAX implementations
-        jQuery.post(gps_ajax_data.ajax_url, data, function(response) {
-                handle_password_response( response );
-        });
         // remove loading image
         $loading_image.detach();
+        
+        // if an error message was sent, display it; otherwise, replace the
+        // protected section with the password form content.
+        if (response.error){
+            
+            var $relock_link = $section.find("a.relock-link");
+            
+            $relock_link.after( "<p class='gps-error'>" + response.error + "</p>" );
+            
+            $relock_link.addClass("gps-error");
+            
+        } else if (response.content){
+            
+            $section.replaceWith( response.content );
+            
+            // remember to add listeners and override non-ajax behaviors to 
+            // password form...
+            init_submit_button();
+            
+        } 
     }
     
     /**
@@ -101,8 +220,8 @@ jQuery(document).ready(function($) {
      * Iterate through all of the form input fields, and add their values to the
      * data array using their names as keys.
      * 
-     * @param jQueryElement $form   The jQuery form element
-     * @param array data    The data to be posted via ajax
+     * @param {object} $form   The jQuery form element
+     * @param {array} data    The data to be posted via ajax
      * @since 1.0.0
      */
     function get_form_data( $form, data ){
@@ -112,29 +231,5 @@ jQuery(document).ready(function($) {
         });
     }
     
-    /**
-     * Handle Password Response
-     * 
-     * @param {type} response
-     */
-    function handle_password_response( response ){
-        
-        var $section = $("div.password-protected-section");
-        
-        if (response["error"]){
-            
-            var $password_label = $section.find("label");
-            var $password_input = $section.find("input[name='gps-section-password']");
-            
-            $password_label.before( "<p class='gps-error'>" + response["error"] + "</p>" );
-            
-            $password_label.addClass("gps-error");
-            $password_input.addClass("gps-error");
-            
-        } else if (response["content"]){
-            
-            $locked_section = $section.replaceWith( response["content"] );
-            
-        }        
-    }
+    
 });

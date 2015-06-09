@@ -4,13 +4,13 @@
  * 
  * This class manages the shortcode used by this plugin
  * 
- * <code>[gps-password title='<title of password>' use-ajax='no'] Protected Content [/gps-password]</code>
+ * <code>[gps-password title='<title of password>' use-ajax='no'reload-page='no'] Protected Content [/gps-password]</code>
  * 
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2014, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
  * @version 1.1.0
- * @since 0.1.4
+ * @since 0.1.0
  *
  * @package password-protect-sections
  * 
@@ -18,6 +18,7 @@
 
 require_once 'class-password-ajax-handler.php';
 require_once 'class-password-template-handler.php';
+require_once 'class-password-authenticator.php';
 
 /**
  * @since 0.1.4
@@ -74,33 +75,30 @@ class Password_Shortcode_Handler {
      * 
      * Starting point for all the work done by this shortcode
      * 
+     * 
      * @param array $attributes
      *  @type   string  title  title of the password used for this section
      *  @type   boolean ajax   use ajax to validate password and update 
-*                              protected content when true [default] ('true','yes'),
-*                              don't use ajax when false ('false','no')
+     *                         protected content when true [default] ('true','yes'),
+     *                         don't use ajax when false ('false','no')
      * @since 0.1.0
      */
     public static function gps_password_shortcode( $attributes_in, $content = null ){
-        
-        
+                
         $is_authenticated = false;
         $password_entered = false;
         
-        $atts = shortcode_atts( array(
-            'title' => null,
-            'ajax' => true,
-        ), $attributes_in );
+        $attributes = self::get_attributes( $attributes_in );
         
         // get the password object (custom post type = 'gps_password')
-        $password_post = get_page_by_title( $atts['title'], null, 'gps_password' );
+        $password_post = get_page_by_title( $attributes['title'], null, 'gps_password' );
         
         // if we can't find a password, then don't try to protect the content
-        if ( ! isset( $password_post ) )  return do_shortcode($content);
+        if ( ! isset( $password_post ) )  {
+            return do_shortcode($content);
+        }
         
-        // dequeue the ajax script if use-ajax is set to 'false' or 'no'
-        $ajax = strtolower( $atts['ajax'] );
-        if ( $ajax === 'false' || $ajax === 'no' ) {
+        if ( ! $attributes['ajax'] ){
             wp_dequeue_script( 'gps-password-ajax-handler' );
         }
        
@@ -117,8 +115,8 @@ class Password_Shortcode_Handler {
             if ( wp_verify_nonce( filter_input(INPUT_POST, '_wpnonce'), 
                     'relock-protected-section-'.$password_post->ID )){
                 
-                unset( $_SESSION['gps_password_' . $password_post->ID . 
-                    '_authenticated'] );
+                $authenticator = new Password_Authenticator($password_post);
+                $authenticator->set_authentication(false);
             }
         }
                         
@@ -143,20 +141,48 @@ class Password_Shortcode_Handler {
             $password_entered = true;  // superfluous
             
             // set the authentication session variables via the authenticator
-            $authenticator = new Password_Authenticator($password_post);
-            $is_authenticated = $authenticator->is_authenticated( $gps_section_password );
+            $authenticator = new Password_Authenticator( $password_post );
+            $is_authenticated = $authenticator->set_authenticated( $gps_section_password );
                     
         // otherwise, if there is a session variable that says this password section is unlocked...
         } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
             $is_authenticated = true;
-        }        
+        }
+        
+        return do_shortcode( self::get_replacement_content( $password_post, 
+                false, $is_authenticated, $attributes, $content) );
+    }
+    
+    /**
+     * Sets global variables that are in a more useful form for the plugin
+     * 
+     * @access private
+     * @param array $atts The attributes from the shortcode
+     * 
+     * @return array $attributes contains the cleaned attributes
+     *  @type boolean ajax True if ajax to be used
+     *  @type boolean reload_page True if Reload Page selected
+     * @since 0.2.0
+     */
+    private static function get_attributes( $attributes_in ){
                 
-        // decide whether to return the protected content or the login form
-        return $hide_content ? self::get_replacement_content( $password_post, 
-                $content, $password_entered && !$is_authenticated, $is_authenticated ) 
-                : do_shortcode( self::get_replacement_content( $password_post, 
-                        $content, false, $is_authenticated) );
-          
+        $attributes_out = shortcode_atts( array(
+            'title' => null,
+            'ajax' => true,
+            'reload_page' => false,
+        ), $attributes_in );
+        
+        // set ajax flag to false if attribute is "false" or "no", otherwise 
+        // true (default)
+        $ajax = strtolower( trim( $attributes_out['ajax'] ) );
+        $attributes_out['ajax'] = ! ($ajax === 'false' || $ajax === 'no' );
+        
+        // set Reload Page flag to true if attribute is "true" or "no", 
+        // otherwise false (default)
+        $reload_page = strtolower( trim( $attributes_out['reload_page'] ) );
+        $attributes_out['reload_page'] = ($reload_page === 'true' || $reload_page === 'yes');
+                
+        return $attributes_out;
     }
     
     
@@ -167,28 +193,29 @@ class Password_Shortcode_Handler {
      * content, or the login form.
      * 
      * 
-     * @global boolean $password_failed
      * @access private
      * @param {object} $password_post   The gps_password custom post type
-     * @param string $content                   The protected content
-     * @param boolean $password_failed          True when the password does not 
-     *                                          match the gps_password
-     * @param boolean $unlocked                 True when gps_password is unlocked,
-     *                                          otherwise false
-     * @return string                           The protected content when $unlocked 
-     *                                          is true, otherwise the login form
+     * @param boolean $password_failed  True when the password does not match 
+     *                                  the gps_password
+     * @param boolean $unlocked         True when gps_password is unlocked,
+     *                                  otherwise false
+     * @param array $attributes         The processed attribute values passed by 
+     *                                  the shortcode
+     * @param string $content           The protected content
+     * @return string                   The protected content when $unlocked is 
+     *                                  true, otherwise the login form
+     * 
+     * @since 0.1.4
      */
-    private static function get_replacement_content( $password_post, $content = null, 
-            $password_failed, $unlocked ){
-        
-        global $password_failed;
-        
+    private static function get_replacement_content( $password_post, 
+            $password_failed, $unlocked, $attributes, $content = null ){
+                
         if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_failed'] ) 
                 && $_SESSION['gps_password_' . $password_post->ID . '_failed'] ){
             
             $password_failed = true;
         }
-        
+                
         ob_start();
         
         if ( $unlocked ){ 
@@ -203,7 +230,7 @@ class Password_Shortcode_Handler {
         
         // clear the password failed session var so it only shows once.
         if ( $password_failed ) {
-            $_SESSION['gps_password_' . $password_post->ID . '_failed'] = false;
+            unset( $_SESSION['gps_password_' . $password_post->ID . '_failed'] );
         }
         
         return ob_get_clean();

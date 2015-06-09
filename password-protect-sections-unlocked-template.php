@@ -17,18 +17,34 @@
  * 
  */
 
+if ( get_the_ID() ){
+    $protected_post_id = get_the_ID();
+}
+
+if ( isset($attributes['reload_page']) ){
+    $is_reload_page = $attributes['reload_page'];
+}
 
 ?>
-
 <div class="password-protected-section unlocked">
-    <form name="password-protected-section-<?php echo $password_post->ID; ?>" id="password-protected-section_<?php echo $password_post->ID; ?>" action="" method="post" class="password-protected-section">
-        <?php wp_nonce_field( 'relock_protected_section_'.$password_post->ID ); ?>
-        <input type="hidden" name="password-name" value="<?php echo $password_post->post_title; ?>"/>
-        <input type='hidden' name='relock-protected-section' id='relock-protected-section' value='1'/>
-        <a class='relock-link' href="#" onclick="parentNode.submit()" title="click to relock content"><i class="fa fa-unlock"></i></a>
-    </form>
+    <form name="password-protected-section-<?php echo $password_post->ID; ?>" 
+          id="password-protected-section_<?php echo $password_post->ID; ?>" 
+          action="" method="post" class="password-protected-section">
         
-    <?php echo $content; ?>
-    
-
+        <?php wp_nonce_field( 'relock_protected_section_'.$password_post->ID ); ?>
+        
+        <input type="hidden" name="password-name" value="<?php echo $password_post->post_title; ?>"/>
+        
+        <input type='hidden' name='relock-protected-section' id='relock-protected-section' value='1'/>
+        
+        <input type="hidden" name="protected-post-id" value="<?php echo $protected_post_id; ?>"/>
+        
+        <?php if ($is_reload_page){ ?>
+            <input type="hidden" name="is-reload-page" value="1"/>
+        <?php } ?>
+        
+        <a class='relock-link' href="#" onclick="parentNode.submit()" title="click to relock content"><i class="fa fa-unlock"></i></a>
+        
+    </form>
+    <?php echo trim($content); ?>
 </div>

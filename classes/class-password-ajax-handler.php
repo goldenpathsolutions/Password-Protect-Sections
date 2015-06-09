@@ -44,6 +44,14 @@ class Password_Ajax_Handler {
         // add get_password_protected_content action for non-logged-in visitors
         add_action( 'wp_ajax_nopriv_get_password_protected_content', 
                 array(  __CLASS__, 'get_password_protected_content') );
+        
+        // add get_password_form action for logged-in users
+        add_action( 'wp_ajax_get_password_form', 
+                array( __CLASS__, 'get_password_form') );
+        
+        // add get_password_form action for non-logged-in visitors
+        add_action( 'wp_ajax_nopriv_get_password_form', 
+                array(  __CLASS__, 'get_password_form') );
     }
     
     /**
@@ -77,65 +85,151 @@ class Password_Ajax_Handler {
     }
     
     /**
-     * Called by AJAX Handler to return the protected content
+     * Called by AJAX Handler JS to return the protected content when unlocking.
+     * Returns unlocked template.  Authenticates password.
+     * 
+     * 
+     * @since 0.2.0
      */
     public static function get_password_protected_content(){
-        
-        $content = '';
-        
-        $password_post = Password_Post_Type::get_password_post_by_name(filter_input(INPUT_POST, 'password-name' ));
+                        
+        $password_post = Password_Post_Type::get_password_post_by_name(
+                filter_input(INPUT_POST, 'password-name' ));
         
         $authenticator = new Password_Authenticator($password_post);
-        $is_authenticated = $authenticator->is_authenticated(
+        
+        $is_authenticated = $authenticator->set_authenticated(
                 filter_input(INPUT_POST, 'gps-section-password' ));
+        
+        
+        // this is going to be the array sent back in JSON format
+        $response = array();
         
         if ($is_authenticated){
             
-            $protected_content_post = get_post( filter_input(INPUT_POST, 'protected-content-post-id' ) );
+            // handle $is_reload_page = true - don't bother pulling the content
+            $is_reload_page = filter_input(INPUT_POST, 'is-reload-page');
             
-            $parser = new Shortcode_parser($protected_content_post->post_content, 
-                    'gps-password');
             
-            /*
-             * pull content contained by shortcode, and apply any shortcodes
-             * that content contains
-             */
-            $content_array = do_shortcode( $parser->get_shortcode_content() );
-            
-            // wrap the content with the template for unlocked state
-            $template_file = Password_Template_Handler::find_template_file ( 
-                    "/password-protect-sections-unlocked-template.php" );
-            
-            /*
-             * Store the contents of the template in the $content variable.
-             * We assume this will include the original contents of the $content
-             * variable.  The template should control what is finally output.
-             * 
-             * template file expects a $content variable with the content contained
-             * by the shortcode, and a $password_post variable with the password
-             * custom post type object.
-             */
-            $output = array();
-            foreach( $content_array as $content ){
-                ob_start();
-
-                include($template_file);
-
-                array_push( $output, ob_get_contents() );
-
-                ob_end_clean();
+            if ( '1' === $is_reload_page ){
+                
+                error_log(print_r($_POST, true));
+                error_log("IS RELOAD PAGE: " . print_r($is_reload_page, true));
+                
+                echo json_encode( array("success" => "No Content: reload page selected"));
+                
+                wp_die();
             }
             
-            // place the content in a json array and output
-            echo json_encode( array( "content"=>$output ) );
+            // if $is_reload_page is false, go ahead and pull the content
+            self::write_content($password_post, $is_reload_page);
             
         } else {
             
-            echo json_encode( array ("error" => $authenticator->error ) );
+            $response["error"] = $authenticator->error;
+            
+            echo json_encode( $response );
         }
         
         wp_die();
     }
     
+    /**
+     * Get Password Form
+     * 
+     * Called by Ajax Handler JS to get the password form (locked template)
+     * when re-locking protected content.
+     * 
+     * 
+     * @since 0.2.0
+     */
+    public static function get_password_form(){
+        
+        // used to add the relevant post id in the template
+        $protected_post_id = filter_input(INPUT_POST, 'protected-post-id' );
+        
+        // used in the template to indicate whether reload_page attribute
+        $is_reload_page = filter_input(INPUT_POST, 'is-reload-page');
+        
+        // used by $template_file
+        $password_post = Password_Post_Type::get_password_post_by_name(
+                filter_input(INPUT_POST, 'password-name' ));
+        
+        // use authenticator to set session variables
+        $authenticator = new Password_Authenticator($password_post);
+        $authenticator->set_authenticated( false );
+        
+        // wrap the content with the template for unlocked state
+        $template_file = Password_Template_Handler::find_template_file ( 
+                "/password-protect-sections-locked-template.php" );
+        
+        ob_start();
+
+        include($template_file);
+        
+        $output = json_encode( array( "content" => ob_get_contents() ) );
+
+        ob_end_clean();
+        
+        echo $output;
+        
+        wp_die();
+        
+    }
+    
+    /**
+     * Gets the content for this post and writes it to content array in JSON format,
+     * 
+     * @access private
+     * @param object $password_post the password post type object.  Passed to the
+     *                              template.
+     * @param boolean $is_reload_page true when reload-page is set.  Passed to the
+     *                                template.
+     * @since 0.2.0
+     */
+    private static function write_content($password_post, $is_reload_page){
+        
+        $protected_post_id = filter_input(INPUT_POST, 'protected-post-id' );
+        $protected_post = get_post( $protected_post_id );
+
+        $parser = new Shortcode_parser($protected_post->post_content, 
+                'gps-password');
+
+        /*
+         * pull content contained by shortcode, and apply any shortcodes
+         * that content contains
+         */
+        error_log($parser->get_shortcode_content());
+        $content_array = do_shortcode( $parser->get_shortcode_content() );
+
+        // wrap the content with the template for unlocked state
+        $template_file = Password_Template_Handler::find_template_file ( 
+                "/password-protect-sections-unlocked-template.php" );
+
+        /*
+         * Store the contents of the template in the $content variable.
+         * We assume this will include the original contents of the $content
+         * variable.  The template should control what is finally output.
+         * 
+         * template file expects a $content variable with the content contained
+         * by the shortcode, and a $password_post variable with the password
+         * custom post type object.
+         */
+        $output = array();
+        foreach( $content_array as $content ){
+            ob_start();
+
+            include($template_file);
+
+            array_push( $output, ob_get_contents() );
+
+            ob_end_clean();
+        }
+
+        $response["content"] = $output;
+
+        // place the content in a json array and output
+        echo json_encode( $response );
+    }
     
 }
