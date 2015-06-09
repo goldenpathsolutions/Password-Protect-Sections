@@ -18,6 +18,9 @@
  * 
  */
 
+/**
+ * @since 0.2.0
+ */
 class Shortcode_parser{
     
     /**
@@ -45,12 +48,13 @@ class Shortcode_parser{
      * 
      * @param {string} $content input to be parsed
      * @param {string} $shortcode_name unique name of shortcode
+     * 
+     * @since 0.2.0
      */
     function __construct( $content, $shortcode_name ){
         
         $this->shortcode_name = $shortcode_name;
         
-     
         // shortcode regex pattern (taken from WP Core function get_shortcode_regex()
         $pattern = '/(.?)\[('.$this->shortcode_name.')\b(.*?)(?:(\/))?\](?:(.+?)\[\/\2\])?(.?)/s';
         
@@ -67,6 +71,8 @@ class Shortcode_parser{
      * No content is returned for self-closing shortcodes.
      * 
      * @return {array} content for given shortcode(s)
+     * 
+     * @since 0.2.0
      */
     public function get_shortcode_content(){
         
@@ -93,12 +99,10 @@ class Shortcode_parser{
             
             array_push($content, $subject);
             
-            
         }
         
         return $content;
         
     }
-    
     
 }

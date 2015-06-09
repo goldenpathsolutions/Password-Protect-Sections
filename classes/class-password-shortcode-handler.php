@@ -19,10 +19,16 @@
 require_once 'class-password-ajax-handler.php';
 require_once 'class-password-template-handler.php';
 
+/**
+ * @since 0.1.4
+ */
 class Password_Shortcode_Handler {
     
     static $style_version = "1.0.1";
     
+    /**
+     * @since 0.1.4
+     */
     function __construct() {
         
         // register and enqueue the style
@@ -45,7 +51,7 @@ class Password_Shortcode_Handler {
      * 
      * Enqueue the css for this plugin
      * 
-     * @since 0.1.0
+     * @since 0.2.0
      */
     public static function register_style(){
         
@@ -54,6 +60,9 @@ class Password_Shortcode_Handler {
                 self::$style_version);
     }
     
+    /**
+     * @since 0.1.4
+     */
     public static function enqueue_style(){
         wp_enqueue_style('gps_password_style');
     }

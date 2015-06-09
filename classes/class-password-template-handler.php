@@ -26,6 +26,8 @@ class Password_Template_Handler{
      * @param   string  $default_template_file_name The name of the default template 
      *                                              file.
      * @return  string  The absolute path to the template file
+     * 
+     * @since 0.2.0
      */
     public static function find_template_file( $default_template_file_name ){        
         

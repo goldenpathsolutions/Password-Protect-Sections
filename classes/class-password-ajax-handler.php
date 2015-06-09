@@ -18,10 +18,18 @@ require_once 'class-password-post-type.php';
 require_once 'class-password-authenticator.php';
 require_once 'class-shortcode-parser.php';
 
+/**
+ * Class Password Ajax Handler
+ * 
+ * @since 0.2.0
+ */
 class Password_Ajax_Handler {
     
     static $js_version = "1.0.0";
     
+    /**
+     * @since 0.2.0
+     */
     static function init() {
         
         // Register AJAX Handler JavaScript
@@ -38,14 +46,23 @@ class Password_Ajax_Handler {
                 array(  __CLASS__, 'get_password_protected_content') );
     }
     
+    /**
+     * @since 0.2.0
+     */
     public static function enqueue_script(){
         wp_enqueue_script('gps-password-ajax-handler');
     }
     
+    /**
+     * @since 0.2.0
+     */
     public static function dequeue_script(){
         wp_dequeue_script('gps-password-ajax-handler');
     }
     
+    /**
+     * @since 0.2.0
+     */
     public static function register_script(){
         wp_register_script( 'gps-password-ajax-handler', 
                 plugins_url('password-protect-sections/js/ajax-handler.js'), 

@@ -11,7 +11,7 @@
  * License: GPLv2
  * 
  * 
- * @category password-protect-sections
+ * @package password-protect-sections
  * @author Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
  * @version 0.2.0
  * 
