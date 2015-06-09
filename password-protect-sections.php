@@ -22,16 +22,16 @@ class Password_Protect_Sections {
     function __construct(){
         
         //Handle plugin installation/uninstallation
-        register_activation_hook( __FILE__, array( 'Password_Protect_Sections', 'activate' ) );
-        register_deactivation_hook( __FILE__, array( 'Password_Protect_Sections', 'deactivate' ) );
-        register_uninstall_hook( __FILE__, array( 'Password_Protect_Sections', 'uninstall' ) );
+        register_activation_hook( __FILE__, array( __CLASS__, 'activate' ) );
+        register_deactivation_hook( __FILE__, array( __CLASS__, 'deactivate' ) );
+        register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
         
         // This plugin uses session variables, so initialize sessions
-        add_action('init', array( 'Password_Protect_Sections', 'register_session', 1 ) );
+        add_action('init', array( __CLASS__, 'register_session'), 1 );
         
         
         // Load font awesome if something else hasn't already done so
-        add_action('wp_enqueue_scripts', array( 'Password_Protect_Sections', 'check_font_awesome'), 99999);
+        add_action('wp_enqueue_scripts', array( __CLASS__, 'check_font_awesome'), 99999);
         
         
         //Add a Custom Post Type for Password Objects
