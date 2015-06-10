@@ -119,11 +119,6 @@ jQuery(document).ready(function($) {
             return;
         }
         
-        
-        // remove loading image
-        $loading_image.detach();
-        $password_label.css("padding-left","0");
-
         // if there was an error, show it with validation error markup
         if (response.error){
             
@@ -150,6 +145,10 @@ jQuery(document).ready(function($) {
             window.location.reload();
             return;
         }  
+        
+        // remove loading image
+        $loading_image.detach();
+        $password_label.css("padding-left","0");
     }
     
     /**
