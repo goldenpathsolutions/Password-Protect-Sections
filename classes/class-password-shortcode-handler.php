@@ -117,7 +117,6 @@ class Password_Shortcode_Handler {
                 $authenticator = new Password_Authenticator($password_post);
                 $authenticator->set_authenticated(false);
                 
-                error_log("SET AUTHENTICATED = FALSE");
             }
         }
                         
@@ -150,8 +149,11 @@ class Password_Shortcode_Handler {
             $is_authenticated = true;
         }
         
+        // password fails if there is a password, but it wasn't authenticated
+        $password_failed = isset( $gps_section_password ) && ! $is_authenticated;
+        
         return do_shortcode( self::get_replacement_content( $password_post, 
-                false, $is_authenticated, $attributes, $content) );
+                $password_failed, $is_authenticated, $attributes, $content) );
     }
     
     /**
@@ -211,12 +213,6 @@ class Password_Shortcode_Handler {
     private static function get_replacement_content( $password_post, 
             $password_failed, $unlocked, $attributes, $content = null ){
                 
-        if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_failed'] ) 
-                && $_SESSION['gps_password_' . $password_post->ID . '_failed'] ){
-            
-            $password_failed = true;
-        }
-                
         ob_start();
         
         if ( $unlocked ){ 
@@ -228,11 +224,6 @@ class Password_Shortcode_Handler {
         }
         
         require( $template_file );
-        
-        // clear the password failed session var so it only shows once.
-        if ( $password_failed ) {
-            unset( $_SESSION['gps_password_' . $password_post->ID . '_failed'] );
-        }
         
         return ob_get_clean();
         

@@ -124,11 +124,9 @@ class Password_Authenticator{
                 unset($_SESSION['gps_password_' . $this->password_post->ID 
                         . '_authenticated']);
 
-                $_SESSION['gps_password_' . $this->password_post->ID 
-                        . '_failed'] = true;
-
                 $this->error = get_post_meta( $this->password_post->ID, 
                         '_gps_password_failed_message', true);
+                
             }
         
         } else {
