@@ -52,6 +52,7 @@ class Password_Ajax_Handler {
         // add get_password_form action for non-logged-in visitors
         add_action( 'wp_ajax_nopriv_get_password_form', 
                 array(  __CLASS__, 'get_password_form') );
+        
     }
     
     /**
@@ -114,9 +115,6 @@ class Password_Ajax_Handler {
             
             if ( '1' === $is_reload_page ){
                 
-                error_log(print_r($_POST, true));
-                error_log("IS RELOAD PAGE: " . print_r($is_reload_page, true));
-                
                 echo json_encode( array("success" => "No Content: reload page selected"));
                 
                 wp_die();
@@ -127,7 +125,7 @@ class Password_Ajax_Handler {
             
         } else {
             
-            $response["error"] = $authenticator->error;
+            $response["error"] = $authenticator->get_error();
             
             echo json_encode( $response );
         }
@@ -160,7 +158,7 @@ class Password_Ajax_Handler {
         // was for another password form on the page (or it's a hacker), and
         // ignore the submission.
         if ( ! wp_verify_nonce( filter_input(INPUT_POST, '_wpnonce'), 
-    'relock_protected_section_'.$password_post->ID ) ){
+                'relock_protected_section_'.$password_post->ID ) ){
             wp_die();
         }
         
@@ -186,6 +184,7 @@ class Password_Ajax_Handler {
         
     }
     
+    
     /**
      * Gets the content for this post and writes it to content array in JSON format,
      * 
@@ -208,7 +207,6 @@ class Password_Ajax_Handler {
          * pull content contained by shortcode, and apply any shortcodes
          * that content contains
          */
-        error_log($parser->get_shortcode_content());
         $content_array = do_shortcode( $parser->get_shortcode_content() );
 
         // wrap the content with the template for unlocked state
