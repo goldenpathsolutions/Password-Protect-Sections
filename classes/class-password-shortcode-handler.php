@@ -76,11 +76,15 @@ class Password_Shortcode_Handler {
      * Starting point for all the work done by this shortcode
      * 
      * 
-     * @param array $attributes
-     *  @type   string  title  title of the password used for this section
-     *  @type   boolean ajax   use ajax to validate password and update 
+     * @param array $attributes_in  Attributes passed from the shortcode
+     *  @type   string title  title of the password used for this section
+     *  @type   string ajax   use ajax to validate password and update 
      *                         protected content when true [default] ('true','yes'),
      *                         don't use ajax when false ('false','no')
+     *  @type   string reload_page when 'true' or 'yes', reload the page after
+     *                              authenticating the password via ajax
+     * @param string $content  Content of the password post type submitted
+     * 
      * @since 0.1.0
      */
     public static function gps_password_shortcode( $attributes_in, $content = null ){
@@ -101,11 +105,6 @@ class Password_Shortcode_Handler {
         if ( ! $attributes['ajax'] ){
             wp_dequeue_script( 'gps-password-ajax-handler' );
         }
-       
-        /*
-         * Note: much of the following code is used in the case where ajax=no or
-         * there is no client-side javaScript.
-         */
         
         // check to see if we're relocking
         $relock_protected_section = filter_input( INPUT_POST, 'relock-protected-section' );
@@ -113,10 +112,12 @@ class Password_Shortcode_Handler {
             
             //verify the nonce
             if ( wp_verify_nonce( filter_input(INPUT_POST, '_wpnonce'), 
-                    'relock-protected-section-'.$password_post->ID )){
+                    'relock_protected_section_'.$password_post->ID )){
                 
                 $authenticator = new Password_Authenticator($password_post);
-                $authenticator->set_authentication(false);
+                $authenticator->set_authenticated(false);
+                
+                error_log("SET AUTHENTICATED = FALSE");
             }
         }
                         
@@ -130,8 +131,8 @@ class Password_Shortcode_Handler {
          * the password in the form submission is irrelevant for this password
          * shortcode, and ignore it.
          */
-        if ( !wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), 
-                'unlock_protected_section_'.$password_post->ID )){
+        if ( ! wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), 
+                'unlock_protected_section_' . $password_post->ID )){
             $gps_section_password = null;
         }
         

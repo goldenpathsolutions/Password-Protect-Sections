@@ -96,7 +96,8 @@ class Password_Ajax_Handler {
         $password_post = Password_Post_Type::get_password_post_by_name(
                 filter_input(INPUT_POST, 'password-name' ));
         
-        $authenticator = new Password_Authenticator($password_post);
+        $authenticator = new Password_Authenticator( $password_post, 
+                filter_input(INPUT_POST, '_wpnonce') );
         
         $is_authenticated = $authenticator->set_authenticated(
                 filter_input(INPUT_POST, 'gps-section-password' ));
@@ -154,6 +155,14 @@ class Password_Ajax_Handler {
         // used by $template_file
         $password_post = Password_Post_Type::get_password_post_by_name(
                 filter_input(INPUT_POST, 'password-name' ));
+        
+        // first, check the nonce.  If that fails, assume the submitted post
+        // was for another password form on the page (or it's a hacker), and
+        // ignore the submission.
+        if ( ! wp_verify_nonce( filter_input(INPUT_POST, '_wpnonce'), 
+    'relock_protected_section_'.$password_post->ID ) ){
+            wp_die();
+        }
         
         // use authenticator to set session variables
         $authenticator = new Password_Authenticator($password_post);

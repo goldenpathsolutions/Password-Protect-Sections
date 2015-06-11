@@ -45,6 +45,7 @@ class Password_Authenticator{
      */
     private $error;
     
+    
     /**
      * 
      * @param {object} $password_post   The Password custom post type to authenticate
@@ -97,6 +98,7 @@ class Password_Authenticator{
         
         $stored_password = get_post_meta( $this->password_post->ID, '_gps_password', true);
         
+        $authenticated = false;
         
         // if $password is not false, then test $password against $stored_password...
         if ( false !== $password ){
@@ -131,16 +133,15 @@ class Password_Authenticator{
         
         } else {
             
-            // otherwise expire authentication: remove session variables, and 
-            // set $authenticated to false
+            // otherwise, set authenticated to false explicitly. 
+            // expire authentication: remove session variables, and set 
+            // $authenticated to false
             
             unset($_SESSION['gps_password_' . $this->password_post->ID 
                         . '_authenticated']);
             unset($_SESSION['gps_password_' . $this->password_post->ID 
                         . '_failed']);
-            
-            $authenticated = false;
-            
+                        
         }
         
         return $authenticated;
