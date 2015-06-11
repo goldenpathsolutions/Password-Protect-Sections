@@ -1,10 +1,18 @@
 <?php
 
-/* 
+/** 
  * This class contains the Password custom post type and related functions
+ * 
+ * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
+ * @copyright (c) 2015, Golden Path Solutions, Inc.
+ * @link http://www.goldenpathsolutions.com
+ * @version 1.1.0
+ * @since 0.1.0
+ *
+ * @package password-protect-sections
  */
 
-class Password_Custom_Post_Type {
+class Password_Post_Type {
     
     var $capability = "edit_passwords";
     
@@ -31,13 +39,38 @@ class Password_Custom_Post_Type {
         
     }
     
+    /**
+     * 
+     * @param {string} $password_post_name
+     * @return {object}
+     * 
+     * @since 0.1.0
+     */
+    public static function get_password_post_by_name($password_post_name){
+        return get_page_by_title( $password_post_name, null, 'gps_password' );
+    }
     
+    /**
+     * 
+     * @param {int} $password_post_id
+     * @return {object}
+     * 
+     * @since 0.1.0
+     */
+    public static function get_password_post_by_id($password_post_id){
+        return get_post( $password_post_id );
+    }
+    
+    /**
+     * @since 0.1.0
+     */
     public function enqueue_admin_style(){
         wp_enqueue_style( 'gps_password_admin_style', plugins_url('password-protect-sections/css/style-admin.css') );
     }
     
     /**
      * Define the Password custom Post Type
+     * @since 0.1.0
      */
     public function create_post_type() {
         
@@ -79,6 +112,7 @@ class Password_Custom_Post_Type {
     
     /**
      * Add capability to use this plugin to administrator
+     * @since 0.1.0
      */
     public function add_capability_to_administrator_role() {
         $role = get_role( 'administrator' );
@@ -95,6 +129,7 @@ class Password_Custom_Post_Type {
     /**
      * Only allow roles with publish_password capability to see
      * Password post type admin UI
+     * @since 0.1.0
      */
     public function manage_ui_access(){
         if( !current_user_can( 'publish_password' ) ){
@@ -105,6 +140,7 @@ class Password_Custom_Post_Type {
     /**
      * Adds custom meta boxes for this post type.
      * Allows user to store the password, and other custom fields
+     * @since 0.1.0
      */
     public function add_meta_box(){
         
@@ -122,6 +158,7 @@ class Password_Custom_Post_Type {
     /**
      * Handles rendering the custom meta fields for Password post types
      * @param type $post WP_Post object for password being edited
+     * @since 0.1.0
      */
     public function password_meta_view( $post ){
         
@@ -134,6 +171,7 @@ class Password_Custom_Post_Type {
      * 
      * @param type $post_id  ID for thie Password being edited
      * @return type $post_id or Password that was stored
+     * @since 0.1.0
      */
     public function save_meta_box_data( $post_id ){
                 
@@ -145,7 +183,7 @@ class Password_Custom_Post_Type {
         
         
         /*
-         * verify if this is an auto save routine. If it is our form has not been submitted, 
+         * verify if this is an auto save routine. If it is, our form has not been submitted, 
          * so we dont want to do anything
          */
         if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
@@ -171,6 +209,29 @@ class Password_Custom_Post_Type {
         }
         
         return $post_id;
+    }
+    
+    /**
+     * Get Protected Content
+     * 
+     * Retrieves the content contained by this password's shortcode in the given
+     * post.  Returns the empty string if nothing found.
+     * 
+     * 
+     * @param {int} $post_id
+     * @return {string} content protected by this password shortcode on the given post
+     * @since 0.1.0
+     */
+    public function get_protected_content( $post_id ){
+        
+        $protected_post = get_post( $post_id );
+        
+        // return empty string if the shortcode isn't in the content
+        if ( ! has_shortcode( $protected_post->post_content, 'gps_password' ) ){
+            return '';
+        }
+        
+        $shortcode_start = preg_match( '#[your-shortcode-heres*.*?]#s', $protected_post->post_content, $matches );
     }
     
 }

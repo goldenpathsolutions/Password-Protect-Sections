@@ -7,9 +7,13 @@
  * 
  * Note that WP_Post object is available as $post
  * 
- * @author: Patrick Jackson, Golden Path Solutions
- * @url: http://www.goldenpathsolutions.com
- * Created: 2014-06-25
+ * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
+ * @copyright (c) 2014, Golden Path Solutions, Inc.
+ * @link http://www.goldenpathsolutions.com
+ * @version 1.0.0
+ * @since 0.1.0
+ *
+ * @package password-protect-sections
  * 
  */
 
