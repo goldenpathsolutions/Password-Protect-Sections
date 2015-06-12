@@ -6,7 +6,13 @@
  * Description: Controller for Password Protected Sections settings page.  It is
  * Repsonsible for storing and retrieving settings selections in the database.
  * 
- * @category password-protect-sections
+ * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
+ * @copyright (c) 2014, Golden Path Solutions, Inc.
+ * @link http://www.goldenpathsolutions.com
+ * @version 1.0.1
+ * @since 0.1.0
+ * 
+ * @package password-protect-sections
  * 
  * Author: Patrick Jackson, Golden Path Solutions
  * Author URL: http://www.goldenpathsolutions.com
@@ -17,6 +23,9 @@ include_once ( dirname( dirname( __FILE__ ) ) . '/password-protect-sections.php'
 
 class Password_Settings_Handler {
     
+    /**
+     * @since 0.1.0
+     */
     function __construct(){
         
         add_action('admin_menu' , array( 'Password_Settings_Handler', 'add_settings_to_post_menu' ) );
@@ -27,14 +36,23 @@ class Password_Settings_Handler {
         add_action('admin_enqueue_scripts', array( 'Password_Protect_Sections', 'check_font_awesome'), 99999);
     }
     
+    /**
+     * @since 0.1.0
+     */
     public static function enqueue_style(){
         // wp_enqueue_style('gps-admin-style', plugins_url('password-protect-sections/css/style-admin.css'), array(), '1.0.0' );
     }
     
+    /**
+     * @since 0.1.0
+     */
     public static function add_settings_to_post_menu() {
         add_submenu_page('edit.php?post_type=gps_password', 'Password Settings', 'Settings', 'publish_password', 'gps_password_settings', array( 'Password_Settings_Handler', 'gps_password_settings_view') );
     }
     
+    /**
+     * @since 0.1.0
+     */
     public static function gps_password_settings_view(){
         
         //load the view for this page

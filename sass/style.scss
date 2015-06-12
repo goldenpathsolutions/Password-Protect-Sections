@@ -1,6 +1,8 @@
 /*
     Contains default styling for this plugin
 
+    version 1.0.2
+
     Created on : Jun 24, 2014, 11:00:15 AM
     Author     : Patrick Jackson <pjackson@goldenpathsolutions.com, 
                  Golden Path Solutions (www.goldenpathsolutions.com)
@@ -9,9 +11,10 @@
     Table of Contents
 
     1. Colors
-    2. Section Replacement Content (locked)
-    3. Section Content (unlocked)
-    4. Validation Markup
+    2. Global
+    3. Section Replacement Content (locked)
+    4. Section Content (unlocked)
+    5. Validation Markup
 */
 
 /*---------------------------------------------------------------------------
@@ -23,7 +26,20 @@ $unlockedContentBackground: #fdfdfd;
 $errorbackground: #ffebfa;
 
 /*---------------------------------------------------------------------------
- *  2. Section Replacement Content (Locked)
+ *  2. Global
+ *
+ *  May be applied anywhere
+ *---------------------------------------------------------------------------*/
+
+// help styling on ajax loading animation
+img.password-ajax-loading {
+    margin: 0 5px;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/*---------------------------------------------------------------------------
+ *  3. Section Replacement Content (Locked)
  *
  *  Applied to replacement content when a section is locked.
  *---------------------------------------------------------------------------*/
@@ -67,7 +83,7 @@ div.password-protected-section {
     }
     
     /*------------------------------------------------------------------------
-     *  3. Section Content (Unlocked)
+     *  4. Section Content (Unlocked)
      *
      *  Applied to the protected content after being unlocked
      *-----------------------------------------------------------------------*/
@@ -89,7 +105,7 @@ div.password-protected-section {
     
     
     /*------------------------------------------------------------------------
-     *  4. Validation Markup
+     *  5. Validation Markup
      *
      *  Applied to form elements when a mistake is made
      *-----------------------------------------------------------------------*/
@@ -98,11 +114,17 @@ div.password-protected-section {
         padding: 5px; 
         margin-bottom: 5px;
     }
+    
     p.gps-error, input.gps-error {
         color: darken($errorbackground, 65%);
+        font-weight: bold;
+    }
+    
+    input.gps-error {
         background-color: $errorbackground;
         border: 1px solid darken($errorbackground, 50%);
     }
+    
     label.gps-error {
         color: darken($errorbackground, 65%);
     }
