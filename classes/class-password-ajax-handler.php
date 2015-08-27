@@ -30,7 +30,7 @@ class Password_Ajax_Handler {
     /**
      * @since 0.2.0
      */
-    static function init() {
+    public static function init() {
         
         // Register AJAX Handler JavaScript
         add_action('init', array(__CLASS__, 'register_script'));
