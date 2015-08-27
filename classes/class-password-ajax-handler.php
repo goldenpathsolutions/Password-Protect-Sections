@@ -232,7 +232,8 @@ class Password_Ajax_Handler {
 
             ob_end_clean();
         }
-
+        
+        $response = array();
         $response["content"] = $output;
 
         // place the content in a json array and output
