@@ -41,8 +41,8 @@ class Password_Post_Type {
     
     /**
      * 
-     * @param {string} $password_post_name
-     * @return {object}
+     * @param string $password_post_name
+     * @return WP_Post
      * 
      * @since 0.1.0
      */
@@ -52,8 +52,8 @@ class Password_Post_Type {
     
     /**
      * 
-     * @param {int} $password_post_id
-     * @return {object}
+     * @param   int $password_post_id
+     * @return  WP_Post
      * 
      * @since 0.1.0
      */
@@ -105,7 +105,6 @@ class Password_Post_Type {
             'capabilities'=> $capabilities,
             'menu_position' => 85,
             'supports' =>  array( 'title','editor' ),
-            //'map_meta_cap' => true,
             'menu_icon' => 'dashicons-lock',
         ) );
     }
@@ -218,8 +217,8 @@ class Password_Post_Type {
      * post.  Returns the empty string if nothing found.
      * 
      * 
-     * @param {int} $post_id
-     * @return {string} content protected by this password shortcode on the given post
+     * @param   int     $post_id
+     * @return  string  content protected by this password shortcode on the given post
      * @since 0.1.0
      */
     /*public function get_protected_content( $post_id ){
