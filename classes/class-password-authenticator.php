@@ -48,11 +48,11 @@ class Password_Authenticator{
     
     /**
      * 
-     * @param {object} $password_post   The Password custom post type to authenticate
+     * @param WP_Post $password_post   The Password custom post type to authenticate
      *                                  against
      * @since 0.2.0
      */
-    function __construct($password_post) {
+    public function __construct($password_post) {
         $this->password_post = $password_post;
     }
     
