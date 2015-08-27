@@ -90,7 +90,6 @@ class Password_Shortcode_Handler {
     public static function gps_password_shortcode( $attributes_in, $content = null ){
                 
         $is_authenticated = false;
-        $password_entered = false;
         
         $attributes = self::get_attributes( $attributes_in );
         
@@ -137,9 +136,7 @@ class Password_Shortcode_Handler {
         
         // if we're handling a form submission...
         if ( isset( $gps_section_password ) ) {
-            
-            $password_entered = true;  // superfluous
-            
+                        
             // set the authentication session variables via the authenticator
             $authenticator = new Password_Authenticator( $password_post );
             $is_authenticated = $authenticator->set_authenticated( $gps_section_password );
