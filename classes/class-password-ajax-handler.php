@@ -97,8 +97,7 @@ class Password_Ajax_Handler {
         $password_post = Password_Post_Type::get_password_post_by_name(
                 filter_input(INPUT_POST, 'password-name' ));
         
-        $authenticator = new Password_Authenticator( $password_post, 
-                filter_input(INPUT_POST, '_wpnonce') );
+        $authenticator = new Password_Authenticator( $password_post );
         
         $is_authenticated = $authenticator->set_authenticated(
                 filter_input(INPUT_POST, 'gps-section-password' ));
