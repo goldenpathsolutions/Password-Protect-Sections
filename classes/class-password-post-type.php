@@ -222,7 +222,7 @@ class Password_Post_Type {
      * @return {string} content protected by this password shortcode on the given post
      * @since 0.1.0
      */
-    public function get_protected_content( $post_id ){
+    /*public function get_protected_content( $post_id ){
         
         $protected_post = get_post( $post_id );
         
@@ -232,6 +232,6 @@ class Password_Post_Type {
         }
         
         $shortcode_start = preg_match( '#[your-shortcode-heres*.*?]#s', $protected_post->post_content, $matches );
-    }
+    }*/
     
 }
