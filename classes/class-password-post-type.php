@@ -16,7 +16,7 @@ class Password_Post_Type {
     
     var $capability = "edit_passwords";
     
-    function __construct(){
+    public function __construct(){
         
         //Add capability to use this plugin to administrator by default
         add_action( 'admin_init', array( &$this, 'add_capability_to_administrator_role' ) );
