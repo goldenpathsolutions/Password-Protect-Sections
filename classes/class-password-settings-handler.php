@@ -26,7 +26,7 @@ class Password_Settings_Handler {
     /**
      * @since 0.1.0
      */
-    function __construct(){
+    public function __construct(){
         
         add_action('admin_menu' , array( 'Password_Settings_Handler', 'add_settings_to_post_menu' ) );
         
@@ -34,13 +34,6 @@ class Password_Settings_Handler {
         
         //Load font awesome if something else hasn't already done so
         add_action('admin_enqueue_scripts', array( 'Password_Protect_Sections', 'check_font_awesome'), 99999);
-    }
-    
-    /**
-     * @since 0.1.0
-     */
-    public static function enqueue_style(){
-        // wp_enqueue_style('gps-admin-style', plugins_url('password-protect-sections/css/style-admin.css'), array(), '1.0.0' );
     }
     
     /**
