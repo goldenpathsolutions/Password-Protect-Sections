@@ -28,6 +28,8 @@ class Password_Ajax_Handler {
     static $js_version = "1.0.0";
     
     /**
+     * Initialize this plugin's ajax actions
+     * 
      * @since 0.2.0
      */
     public static function init() {
@@ -56,6 +58,8 @@ class Password_Ajax_Handler {
     }
     
     /**
+     * Enqueue the script used for handling this plugin's ajax
+     * 
      * @since 0.2.0
      */
     public static function enqueue_script(){
@@ -63,6 +67,10 @@ class Password_Ajax_Handler {
     }
     
     /**
+     * Dequeue the script used for this plugin's ajax.  This is called when
+     * ajax is disabled in the shortcode by setting the <code>ajax</code> attribute
+     * to false.
+     * 
      * @since 0.2.0
      */
     public static function dequeue_script(){
@@ -70,6 +78,8 @@ class Password_Ajax_Handler {
     }
     
     /**
+     * Register the script used to handle ajax for this plugin
+     * 
      * @since 0.2.0
      */
     public static function register_script(){
