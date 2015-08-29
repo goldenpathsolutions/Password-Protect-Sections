@@ -30,7 +30,7 @@ class Password_Shortcode_Handler {
     /**
      * @since 0.1.4
      */
-    function __construct() {
+    public function __construct() {
         
         // register and enqueue the style
         add_action('init', array(__CLASS__, 'register_style'));
@@ -157,7 +157,7 @@ class Password_Shortcode_Handler {
      * Sets global variables that are in a more useful form for the plugin
      * 
      * @access private
-     * @param array $atts The attributes from the shortcode
+     * @param array $attributes_in The attributes from the shortcode
      * 
      * @return array $attributes contains the cleaned attributes
      *  @type boolean ajax True if ajax to be used
@@ -172,13 +172,11 @@ class Password_Shortcode_Handler {
             'reload_page' => false,
         ), $attributes_in );
         
-        // set ajax flag to false if attribute is "false" or "no", otherwise 
-        // true (default)
+        // set ajax flag to false if attribute is "false" or "no", otherwise true (default)
         $ajax = strtolower( trim( $attributes_out['ajax'] ) );
         $attributes_out['ajax'] = ! ($ajax === 'false' || $ajax === 'no' );
         
-        // set Reload Page flag to true if attribute is "true" or "no", 
-        // otherwise false (default)
+        // set Reload Page flag to true if attribute is "true" or "no", otherwise false (default)
         $reload_page = strtolower( trim( $attributes_out['reload_page'] ) );
         $attributes_out['reload_page'] = ($reload_page === 'true' || $reload_page === 'yes');
                 
@@ -194,16 +192,16 @@ class Password_Shortcode_Handler {
      * 
      * 
      * @access private
-     * @param {object} $password_post   The gps_password custom post type
-     * @param boolean $password_failed  True when the password does not match 
-     *                                  the gps_password
-     * @param boolean $unlocked         True when gps_password is unlocked,
-     *                                  otherwise false
-     * @param array $attributes         The processed attribute values passed by 
-     *                                  the shortcode
-     * @param string $content           The protected content
-     * @return string                   The protected content when $unlocked is 
-     *                                  true, otherwise the login form
+     * @param WP_Post   $password_post      The gps_password custom post type
+     * @param boolean   $password_failed    True when the password does not match 
+     *                                      the gps_password
+     * @param boolean   $unlocked           True when gps_password is unlocked,
+     *                                      otherwise false
+     * @param array     $attributes         The processed attribute values passed by 
+     *                                      the shortcode
+     * @param string    $content            The protected content
+     * @return string                       The protected content when $unlocked is 
+     *                                      true, otherwise the login form
      * 
      * @since 0.1.4
      */
