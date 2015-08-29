@@ -19,7 +19,7 @@
 
 class Password_Protect_Sections {
     
-    function __construct(){
+    public function __construct(){
         
         //Handle plugin installation/uninstallation
         register_activation_hook( __FILE__, array( __CLASS__, 'activate' ) );
@@ -50,29 +50,7 @@ class Password_Protect_Sections {
         
     }
     
-    /**
-     * Do this when plugin is activated.
-     * Create custom database tables/fields here
-     */
-    public static function activate(){
-        
-    }
     
-    /**
-     * Do this when plugin is deactivated
-     * Do any cleanup required if plugin is deactivated (but not deleted)
-     */
-    public static function deactivate(){
-        
-    }
-    
-    /**
-     * Do this when plugin is uninstalled
-     * Do any cleanup when plugin is deleted
-     */
-    public static function uninstall(){
-        
-    }
     
     public static function register_session(){
         
