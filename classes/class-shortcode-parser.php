@@ -27,14 +27,14 @@ class Shortcode_parser{
      * An array of starting shortcodes along with their position.
      * Watch for self-closing shortcodes.
      * 
-     * @var string[]
+     * @var array
      */
     var $shortcode_matches;
     
     /**
      * An array of ending shortcodes along with their positions.
      * 
-     * @var string[] 
+     * @var array
      */
     var $closing_shortcodes;
     
@@ -70,7 +70,7 @@ class Shortcode_parser{
      * Returns an array whose elements are the contents of each shortcode found.  
      * No content is returned for self-closing shortcodes.
      * 
-     * @return string[] content for given shortcode(s)
+     * @return array content for given shortcode(s)
      * 
      * @since 0.2.0
      */
