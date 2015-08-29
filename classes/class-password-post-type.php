@@ -209,28 +209,6 @@ class Password_Post_Type {
         
         return $post_id;
     }
-    
-    /**
-     * Get Protected Content
-     * 
-     * Retrieves the content contained by this password's shortcode in the given
-     * post.  Returns the empty string if nothing found.
-     * 
-     * 
-     * @param   int     $post_id
-     * @return  string  content protected by this password shortcode on the given post
-     * @since 0.1.0
-     */
-    /*public function get_protected_content( $post_id ){
-        
-        $protected_post = get_post( $post_id );
-        
-        // return empty string if the shortcode isn't in the content
-        if ( ! has_shortcode( $protected_post->post_content, 'gps_password' ) ){
-            return '';
-        }
-        
-        $shortcode_start = preg_match( '#[your-shortcode-heres*.*?]#s', $protected_post->post_content, $matches );
-    }*/
+
     
 }
