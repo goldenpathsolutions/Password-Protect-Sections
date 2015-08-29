@@ -27,14 +27,14 @@ class Shortcode_parser{
      * An array of starting shortcodes along with their position.
      * Watch for self-closing shortcodes.
      * 
-     * @var {array}
+     * @var string[]
      */
     var $shortcode_matches;
     
     /**
      * An array of ending shortcodes along with their positions.
      * 
-     * @var type 
+     * @var string[] 
      */
     var $closing_shortcodes;
     
@@ -46,12 +46,12 @@ class Shortcode_parser{
      * This constructor accepts the input to be parsed.
      * Populates the $opening_shortcodes and $closing_shortcodes
      * 
-     * @param {string} $content input to be parsed
-     * @param {string} $shortcode_name unique name of shortcode
+     * @param string $content input to be parsed
+     * @param string $shortcode_name unique name of shortcode
      * 
      * @since 0.2.0
      */
-    function __construct( $content, $shortcode_name ){
+    public function __construct( $content, $shortcode_name ){
         
         $this->shortcode_name = $shortcode_name;
         
@@ -70,7 +70,7 @@ class Shortcode_parser{
      * Returns an array whose elements are the contents of each shortcode found.  
      * No content is returned for self-closing shortcodes.
      * 
-     * @return {array} content for given shortcode(s)
+     * @return string[] content for given shortcode(s)
      * 
      * @since 0.2.0
      */
