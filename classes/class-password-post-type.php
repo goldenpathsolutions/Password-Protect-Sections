@@ -168,46 +168,77 @@ class Password_Post_Type {
     
     /**
      * 
-     * @param type $post_id  ID for thie Password being edited
-     * @return type $post_id or Password that was stored
+     * @param   int $post_id    ID for thie Password being edited or Password 
+     *                          that was stored
+     * @return  int $post_id 
      * @since 0.1.0
      */
     public function save_meta_box_data( $post_id ){
-                
-        // verify this came from our screen and with proper authorization.
-        if ( ! wp_verify_nonce( filter_input(INPUT_POST, 'gps_password_meta_nonce' ), 
-                        'save_password_in_password_type' )) {
-            return $post_id;
-        }
         
-        
-        /*
-         * verify if this is an auto save routine. If it is, our form has not been submitted, 
-         * so we dont want to do anything
-         */
-        if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
-            return $post_id;
-
-        // Check permissions
-        if ( ! current_user_can( 'edit_password', $post_id ) )
-            return $post_id;
-
-
-        // By now we're authenticated; we need to find and save the data  
         $post = get_post($post_id);
-        if ($post->post_type == 'gps_password') {
+                
+        // first, check to be sure we should be saving the data
+        if ( $post &&
+             $this->nonce_is_verified() &&
+             !  $this->is_doing_autosave() &&
+             $this->user_can_save_data( $post_id ) &&
+             $this->is_password_post_type() ) {
+            
+            // Now we know it's safe to try to save the data, 
             $password_input = filter_input(INPUT_POST, 'password_input' );
             if ( $password_input ){
                 update_post_meta($post_id, '_gps_password', $password_input );
             }
-            
+
             $password_failed_message = filter_input(INPUT_POST, 'password_failed_message' );
             if ( $password_failed_message ){
                 update_post_meta( $post_id, '_gps_password_failed_message', $password_failed_message );
             }
+            
         }
-        
+
         return $post_id;
+    }
+    
+    /**
+     * Use nonce to verify someone isn't trying to hack the system with a bogus
+     * password post.  Match the returned post data with the view we generated.
+     * 
+     * @return  boolean     True if nonce is verified, otherwise false
+     */
+    private function nonce_is_verified(){
+        return wp_verify_nonce( filter_input(INPUT_POST, 'gps_password_meta_nonce' ), 
+                        'save_password_in_password_type' );
+    }
+    
+    /**
+     * verify if this is an auto save routine. If it is, our form has not been submitted, 
+     * so we dont want to do anything
+     * 
+     * @return   boolean     True if this save is an autosave, otherwise false
+     */
+    private function is_doing_autosave(){
+        return defined('DOING_AUTOSAVE') && DOING_AUTOSAVE;
+    }
+    
+    /**
+     * Check user permissions to verify user is allowed to edit the password object
+     * 
+     * @param   int     $post_id    The post id for which we are checking permissions
+     * @return  boolean     True if the user can edit passwords, otherwise false
+     */
+    private function user_can_save_data( $post_id ){
+        return current_user_can( 'edit_password', $post_id );
+    }
+    
+    /**
+     * 
+     * @param   WP_Post $post   The post we are verifying whether it is a Password 
+     *                          post type
+     * @return  boolean True if the post is a Password post type, otherwise false
+     */
+    private function is_password_post_type( $post ){
+        $post->post_type == 'gps_password';
     }
 
     
