@@ -176,7 +176,7 @@ class Password_Post_Type {
     public function save_meta_box_data( $post_id ){
                 
         // first, check to be sure we should be saving the data
-        if ( is_okay_to_save( $post_id ) ) {
+        if ( $this->is_okay_to_save( $post_id ) ) {
             
             // Now we know it's safe to try to save the data, 
             $password_input = filter_input(INPUT_POST, 'password_input' );
@@ -238,7 +238,7 @@ class Password_Post_Type {
      * @since 0.2.1
      */
     private function is_password_post_type( $post ){
-        $post->post_type == 'gps_password';
+        $post->post_type === 'gps_password';
     }
     
     /**
