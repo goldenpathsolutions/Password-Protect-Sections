@@ -136,6 +136,7 @@ class Shortcode_parser{
      * @param type $opening_pattern
      * @param type $shortcode_title
      * @return type
+     * @since 0.2.1
      */
     private function skip_block( $subject, $opening_pattern, $shortcode_title ){
         

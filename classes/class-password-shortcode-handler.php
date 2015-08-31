@@ -193,6 +193,7 @@ class Password_Shortcode_Handler {
      * Determine whether user chose to relock content, and handle it if they did
      * 
      * @param   WP_Post $password_post  The password object we are checking
+     * @since 0.2.1
      */
     private static function handle_relocking_case( $password_post ){
         
@@ -220,6 +221,7 @@ class Password_Shortcode_Handler {
      *                                          contains the correct password
      * @return boolean|null  true when password given matches the stored password or 
      *                  if there is an authenticated session, otherwise false
+     * @since 0.2.1
      */
     private static function authenticate_password( $gps_section_password, $password_post ){
         
@@ -255,6 +257,7 @@ class Password_Shortcode_Handler {
      * 
      * @param   WP_Post   $password_post  The Password post type we are authenticating against
      * @return  string   The password entered, or null if nonce verification fails
+     * @since 0.2.1
      */
     private static function get_password_entered( $password_post ){
         

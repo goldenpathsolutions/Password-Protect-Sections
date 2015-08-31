@@ -199,6 +199,7 @@ class Password_Post_Type {
      * password post.  Match the returned post data with the view we generated.
      * 
      * @return  boolean     True if nonce is verified, otherwise false
+     * @since 0.2.1
      */
     private function nonce_is_verified(){
         return wp_verify_nonce( filter_input(INPUT_POST, 'gps_password_meta_nonce' ), 
@@ -210,6 +211,7 @@ class Password_Post_Type {
      * so we dont want to do anything
      * 
      * @return   boolean     True if this save is an autosave, otherwise false
+     * @since 0.2.1
      */
     private function is_doing_autosave(){
         return defined('DOING_AUTOSAVE') && DOING_AUTOSAVE;
@@ -220,25 +222,33 @@ class Password_Post_Type {
      * 
      * @param   int     $post_id    The post id for which we are checking permissions
      * @return  boolean     True if the user can edit passwords, otherwise false
+     * @since 0.2.1
      */
     private function user_can_save_data( $post_id ){
         return current_user_can( 'edit_password', $post_id );
     }
     
     /**
+     * A condition used by is_okay_to_save. We need to make sure we've got the
+     * right post type before trying to save.
      * 
      * @param   WP_Post $post   The post we are verifying whether it is a Password 
      *                          post type
      * @return  boolean True if the post is a Password post type, otherwise false
+     * @since 0.2.1
      */
     private function is_password_post_type( $post ){
         $post->post_type == 'gps_password';
     }
     
     /**
-     * 
+     * Convenience function that tells us when all the conditions are met to save
+     * the password post type fields.
      * 
      * @param int   $post_id    id of post we are checking to see if we can save it
+     * @return boolean  true when the conditions are all met indicating it is safe 
+     *                  and appropriate to save the password fields, otherwise false.
+     * @since 0.2.1
      */
     private function is_okay_to_save( $post_id ){
         
@@ -250,6 +260,5 @@ class Password_Post_Type {
                 $this->user_can_save_data( $post_id ) &&
                 $this->is_password_post_type( $post );
     }
-
     
 }
