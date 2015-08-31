@@ -198,7 +198,7 @@ class Password_Ajax_Handler {
      * Gets the content for this post and writes it to content array in JSON format,
      * 
      * @access private
-     * @param object $password_post the password post type object.  Passed to the
+     * @param WP_Post $password_post the password post type object.  Passed to the
      *                              template.
      * @param boolean $is_reload_page true when reload-page is set.  Passed to the
      *                                template.
@@ -210,11 +210,12 @@ class Password_Ajax_Handler {
         $protected_post = get_post( $protected_post_id );
 
         $parser = new Shortcode_parser($protected_post->post_content, 
-                'gps-password');
+                'gps-password', $password_post->post_title);
 
         /*
-         * pull content contained by shortcode, and apply any shortcodes
-         * that content contains
+         * pull content contained by the $password_post's shortcode.
+         * It's in an array because the same password may be used multiple
+         * times on the same page.
          */
         $content_array = $parser->get_shortcode_content();
 
