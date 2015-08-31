@@ -108,7 +108,8 @@ class Password_Shortcode_Handler {
         $gps_section_password = self::get_password_entered( $password_post );
         
         // if we're handling a form submission, authenticate it
-        $is_authenticated = self::authenticate_password();
+        $is_authenticated = self::authenticate_password( $gps_section_password, 
+                $password_post );
         
         // password fails if there is a password, but it wasn't authenticated
         $password_failed = isset( $gps_section_password ) && ! $is_authenticated;
