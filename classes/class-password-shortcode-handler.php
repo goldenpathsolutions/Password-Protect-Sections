@@ -112,7 +112,7 @@ class Password_Shortcode_Handler {
                 $password_post );
         
         // password fails if there is a password, but it wasn't authenticated
-        $password_failed = isset( $gps_section_password ) && ! $is_authenticated;
+        $password_failed = isset( $gps_section_password ) && null !== $is_authenticated;
         
         return do_shortcode( self::get_replacement_content( $password_post, 
                 $password_failed, $is_authenticated, $attributes, $content) );
@@ -218,7 +218,7 @@ class Password_Shortcode_Handler {
      * @param string    $gps_section_password   The password entered by the user
      * @param WP_Post   $password_post          The password custom post type that 
      *                                          contains the correct password
-     * @return boolean  true when password given matches the stored password or 
+     * @return boolean|null  true when password given matches the stored password or 
      *                  if there is an authenticated session, otherwise false
      */
     private static function authenticate_password( $gps_section_password, $password_post ){
