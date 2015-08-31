@@ -174,15 +174,9 @@ class Password_Post_Type {
      * @since 0.1.0
      */
     public function save_meta_box_data( $post_id ){
-        
-        $post = get_post($post_id);
                 
         // first, check to be sure we should be saving the data
-        if ( $post &&
-             $this->nonce_is_verified() &&
-             !  $this->is_doing_autosave() &&
-             $this->user_can_save_data( $post_id ) &&
-             $this->is_password_post_type() ) {
+        if ( is_okay_to_save( $post_id ) ) {
             
             // Now we know it's safe to try to save the data, 
             $password_input = filter_input(INPUT_POST, 'password_input' );
@@ -239,6 +233,22 @@ class Password_Post_Type {
      */
     private function is_password_post_type( $post ){
         $post->post_type == 'gps_password';
+    }
+    
+    /**
+     * 
+     * 
+     * @param int   $post_id    id of post we are checking to see if we can save it
+     */
+    private function is_okay_to_save( $post_id ){
+        
+        $post = get_post($post_id);
+        
+        return  $post &&
+                $this->nonce_is_verified() &&
+                !  $this->is_doing_autosave() &&
+                $this->user_can_save_data( $post_id ) &&
+                $this->is_password_post_type( $post );
     }
 
     
