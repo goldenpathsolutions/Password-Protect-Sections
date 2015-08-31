@@ -216,7 +216,7 @@ class Password_Ajax_Handler {
          * pull content contained by shortcode, and apply any shortcodes
          * that content contains
          */
-        $content_array = do_shortcode( $parser->get_shortcode_content() );
+        $content_array = $parser->get_shortcode_content();
 
         // wrap the content with the template for unlocked state
         $template_file = Password_Template_Handler::find_template_file ( 

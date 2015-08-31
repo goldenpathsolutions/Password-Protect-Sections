@@ -46,5 +46,5 @@ if ( isset($attributes['reload_page']) ){
         <a class='relock-link' href="#" onclick="parentNode.submit()" title="click to relock content"><i class="fa fa-unlock"></i></a>
         
     </form>
-    <?php echo trim($content); ?>
+    <?php echo trim( do_shortcode( wpautop( $content ) ) ); ?>
 </div>
