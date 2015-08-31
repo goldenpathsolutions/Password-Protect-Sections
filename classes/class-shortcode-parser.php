@@ -60,7 +60,7 @@ class Shortcode_parser{
      * 
      * @param string $content           input to be parsed
      * @param string $shortcode_name    unique name of shortcode
-     * @param string $password_title    title of password object
+     * @param string $shortcode_title    title of password object
      * 
      * @since 0.2.0
      */
@@ -130,12 +130,17 @@ class Shortcode_parser{
     }
     
     /**
-     * Used by get_shortcode_content
+     * Used by get_shortcode_content to determine if the enclosing shortcode
+     * instance is the one we're interested in.
      * 
-     * @param type $subject
-     * @param type $opening_pattern
-     * @param type $shortcode_title
-     * @return type
+     * @param string $subject           The content block enclosed by the shortcode 
+     *                                  (inclusive)
+     * @param string $opening_pattern   The regex pattern used to define the opening 
+     *                                  shortcode tag
+     * @param string $shortcode_title   The title of the custom post type referenced 
+     *                                  in the shortcode tag
+     * @return int|boolean  The position of $shortcode_title if found in the opening 
+     *                      shortcode tag, false if not found
      * @since 0.2.1
      */
     private function skip_block( $subject, $opening_pattern, $shortcode_title ){
