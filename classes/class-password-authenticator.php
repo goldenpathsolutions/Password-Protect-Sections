@@ -88,7 +88,7 @@ class Password_Authenticator{
      * this gps_password object.  Sets $error with error message on failure.
      * Also sets session variables for authenticatd or failed authentication.
      * 
-     * @param {string | boolean} $password  The password entered that is being tested
+     * @param string|boolean $password  The password entered that is being tested
      *                                      If false, set to deauthenticated
      * @return boolean  True if authenticated, otherwise false
      * 
@@ -103,11 +103,12 @@ class Password_Authenticator{
         // if $password is not false, then test $password against $stored_password...
         if ( false !== $password ){
         
-            $authenticated = trim($password) === trim($stored_password);
+            $authenticated = trim($password) === trim($stored_password) &&
+                             null !== $password;
             
             // if password was correct, set session authentication var to true
             // and make sure any failed password error is unset
-            if ( $authenticated ){
+            if ( true === $authenticated ){
             
                 $_SESSION['gps_password_' . $this->password_post->ID 
                         . '_authenticated'] = true;
