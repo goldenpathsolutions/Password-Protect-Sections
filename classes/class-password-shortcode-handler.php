@@ -112,7 +112,7 @@ class Password_Shortcode_Handler {
                 $password_post );
         
         // password fails if there is a password, but it wasn't authenticated
-        $password_failed = isset( $gps_section_password ) && null !== $is_authenticated;
+        $password_failed = isset( $gps_section_password ) && false !== $is_authenticated;
         
         return do_shortcode( self::get_replacement_content( $password_post, 
                 $password_failed, $is_authenticated, $attributes, $content) );
