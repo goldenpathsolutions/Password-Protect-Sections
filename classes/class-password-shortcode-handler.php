@@ -88,9 +88,7 @@ class Password_Shortcode_Handler {
      * @since 0.1.0
      */
     public static function gps_password_shortcode( $attributes_in, $content = null ){
-                
-        $is_authenticated = false;
-        
+                        
         $attributes = self::get_attributes( $attributes_in );
         
         // get the password object (custom post type = 'gps_password')
@@ -101,50 +99,16 @@ class Password_Shortcode_Handler {
             return do_shortcode($content);
         }
         
-        if ( ! $attributes['ajax'] ){
-            wp_dequeue_script( 'gps-password-ajax-handler' );
-        }
+        self::handle_ajax_attribute( $attributes );
         
         // check to see if we're relocking
-        $relock_protected_section = filter_input( INPUT_POST, 'relock-protected-section' );
-        if ( $relock_protected_section ){
-            
-            //verify the nonce
-            if ( wp_verify_nonce( filter_input(INPUT_POST, '_wpnonce'), 
-                    'relock_protected_section_'.$password_post->ID )){
-                
-                $authenticator = new Password_Authenticator($password_post);
-                $authenticator->set_authenticated(false);
-                
-            }
-        }
-                        
-        // check to see if we're handling a password submission
-        $gps_section_password = filter_input(INPUT_POST, 'gps-section-password' );
+        self::handle_relocking_case( $password_post );
         
-        /*
-         * Make sure password entered was for this password object.
-         * Handles case where different password shortcodes are on one page.
-         * To do this, handle the nonce.  If it returns false, assume
-         * the password in the form submission is irrelevant for this password
-         * shortcode, and ignore it.
-         */
-        if ( ! wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), 
-                'unlock_protected_section_' . $password_post->ID )){
-            $gps_section_password = null;
-        }
+        // get the password entered. null if nonce verification fails
+        $gps_section_password = self::get_password_entered( $password_post );
         
-        // if we're handling a form submission...
-        if ( isset( $gps_section_password ) ) {
-                        
-            // set the authentication session variables via the authenticator
-            $authenticator = new Password_Authenticator( $password_post );
-            $is_authenticated = $authenticator->set_authenticated( $gps_section_password );
-                    
-        // otherwise, if there is a session variable that says this password section is unlocked...
-        } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
-            $is_authenticated = true;
-        }
+        // if we're handling a form submission, authenticate it
+        $is_authenticated = self::authenticate_password();
         
         // password fails if there is a password, but it wasn't authenticated
         $password_failed = isset( $gps_section_password ) && ! $is_authenticated;
@@ -224,4 +188,93 @@ class Password_Shortcode_Handler {
         
     }
     
+    /**
+     * Determine whether user chose to relock content, and handle it if they did
+     * 
+     * @param   WP_Post $password_post  The password object we are checking
+     */
+    private static function handle_relocking_case( $password_post ){
+        
+        $relock_protected_section = filter_input( INPUT_POST, 'relock-protected-section' );
+        if ( $relock_protected_section ){
+            
+            //verify the nonce
+            if ( wp_verify_nonce( filter_input(INPUT_POST, '_wpnonce'), 
+                    'relock_protected_section_'.$password_post->ID )){
+                
+                $authenticator = new Password_Authenticator($password_post);
+                $authenticator->set_authenticated(false);
+                
+            }
+        }
+        
+    }
+    
+    /**
+     * Checks the password given against the stored password.  If there is an
+     * authenticated session, authentication evaluates to true.
+     * 
+     * @param string    $gps_section_password   The password entered by the user
+     * @param WP_Post   $password_post          The password custom post type that 
+     *                                          contains the correct password
+     * @return boolean  true when password given matches the stored password or 
+     *                  if there is an authenticated session, otherwise false
+     */
+    private static function authenticate_password( $gps_section_password, $password_post ){
+        
+        if ( isset( $gps_section_password ) ) {
+                        
+            // set the authentication session variables via the authenticator
+            $authenticator = new Password_Authenticator( $password_post );
+            return $authenticator->set_authenticated( $gps_section_password );
+                    
+        // otherwise, if there is a session variable that says this password section is unlocked...
+        } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
+            return true;
+        }
+        
+    }
+    
+    /**
+     * If the ajax attribute is not present, remove the ajax handler
+     * 
+     * @param array $attributes the set of shortcode attributes
+     */
+    private static function handle_ajax_attribute( $attributes ){
+        
+        if ( ! $attributes['ajax'] ){
+            wp_dequeue_script( 'gps-password-ajax-handler' );
+        }
+        
+    }
+    
+    /**
+     * Get the password entered in the form.  If nonce verification fails,
+     * return null
+     * 
+     * @param   WP_Post   $password_post  The Password post type we are authenticating against
+     * @return  string   The password entered, or null if nonce verification fails
+     */
+    private static function get_password_entered( $password_post ){
+        
+        /*
+         * Make sure password entered was for this password object.
+         * Handles case where different password shortcodes are on one page.
+         * To do this, handle the nonce.  If it returns false, assume
+         * the password in the form submission is irrelevant for this password
+         * shortcode, and ignore it.
+         */
+        if ( ! wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), 
+                'unlock_protected_section_' . $password_post->ID )){
+            
+            return null;
+            
+        } else {
+            
+            return filter_input(INPUT_POST, 'gps-section-password' );
+            
+        }
+        
+    }
+        
 }
