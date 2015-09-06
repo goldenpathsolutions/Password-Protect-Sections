@@ -33,7 +33,7 @@ class Password_Shortcode_Handler {
     /**
      * Keeps track of password instances and their protected content blocks
      * 
-     * @var gps\password_protect_sections\PasswordContainer 
+     * @var PasswordContainer 
      * @since 0.3.0 
      */
     static $password_container;
@@ -243,6 +243,8 @@ class Password_Shortcode_Handler {
      * @since 0.2.1
      */
     private static function authenticate_password( $gps_section_password, $password_post ){
+        
+        $authenticated = false;
         
         if ( isset( $gps_section_password ) ) {
                         
