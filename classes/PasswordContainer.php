@@ -11,7 +11,7 @@ namespace gps\password_protect_section;
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2015, Golden Path Solutions, Inc.
  * @version 1.0.1
- * @since 0.2.2
+ * @since 0.3.0
  * 
  * @package password-protect-sections
  * 
