@@ -238,7 +238,7 @@ class Password_Shortcode_Handler {
      * @param string    $gps_section_password   The password entered by the user
      * @param WP_Post   $password_post          The password custom post type that 
      *                                          contains the correct password
-     * @return boolean|null  true when password given matches the stored password or 
+     * @return boolean  true when password given matches the stored password or 
      *                  if there is an authenticated session, otherwise false
      * @since 0.2.1
      */
@@ -248,13 +248,15 @@ class Password_Shortcode_Handler {
                         
             // set the authentication session variables via the authenticator
             $authenticator = new Password_Authenticator( $password_post );
-            return $authenticator->set_authenticated( $gps_section_password );
+            $authenticated = $authenticator->set_authenticated( $gps_section_password );
                     
         // otherwise, if there is a session variable that says this password section is unlocked...
         } else if ( isset( $_SESSION['gps_password_' . $password_post->ID . '_authenticated'] ) ) {
-            return true;
+            $authenticated = true;
         }
         
+        // filter out any non-boolean values for $authenticated
+        return true === $authenticated;
     }
     
     /**
