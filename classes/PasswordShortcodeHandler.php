@@ -43,7 +43,7 @@ class Password_Shortcode_Handler {
      */
     public function __construct() {
         
-        static::$password_container = new PasswordContainer();
+        self::$password_container = new PasswordContainer();
         
         // register and enqueue the style
         add_action('init', array(__CLASS__, 'register_style'));
@@ -113,7 +113,7 @@ class Password_Shortcode_Handler {
         }
         
         // store the password object and content in the $password_container
-        $password_instance_idx = static::$password_container->add($password_post, $content);
+        $password_instance_idx = self::$password_container->add($password_post, $content);
         
         // remove ajax support if ajax is set to false
         self::handle_ajax_attribute( $attributes );
