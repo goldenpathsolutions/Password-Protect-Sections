@@ -30,13 +30,12 @@ class Password_Shortcode_Handler {
     static $style_version = "1.0.2";
     
     /**
-     * Keeps track of how many password fields appear on a page
-     * so they can be given unique identifiers.  Used for ajax
-     * loading. 
+     * Keeps track of password instances and their protected content blocks
      * 
-     * @var gps\password_protect_section\PasswordTracker   
+     * @var gps\password_protect_section\PasswordContainer 
+     * @since 0.3.0 
      */
-    static $password_tracker;
+    static $password_container;
     
     /**
      * @since 0.1.4

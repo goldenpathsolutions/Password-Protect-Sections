@@ -19,13 +19,22 @@ namespace gps\password_protect_section;
 
 namespace gps\password_protect_sections;
 
+
 /**
- * Description of PasswordContainer
- *
- * @author pjackson
+ * @since 0.3.0
  */
 class PasswordContainer {
     
+    /**
+     *
+     * @var array   3d array maps password instances to their protected content 
+     *      blocks. Dimensions include the following.
+     *      int     unique identifier for password object
+     *      int     unique identifier for password instance
+     *      string  content protected by that instance
+     * @since   0.3.0
+     */
+    private $protected_sections = array();
     
     
     
