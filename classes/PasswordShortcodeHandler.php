@@ -33,7 +33,7 @@ class Password_Shortcode_Handler {
     /**
      * Keeps track of password instances and their protected content blocks
      * 
-     * @var gps\password_protect_section\PasswordContainer 
+     * @var gps\password_protect_sections\PasswordContainer 
      * @since 0.3.0 
      */
     static $password_container;
