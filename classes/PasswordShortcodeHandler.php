@@ -43,7 +43,7 @@ class Password_Shortcode_Handler {
      */
     public function __construct() {
         
-        static::$password_tracker = new gps\password_protect_section\PasswordTracker();
+        static::$password_container = new PasswordContainer();
         
         // register and enqueue the style
         add_action('init', array(__CLASS__, 'register_style'));
@@ -112,6 +112,9 @@ class Password_Shortcode_Handler {
             return do_shortcode($content);
         }
         
+        // store the password object and content in the $password_container
+        $password_instance_idx = static::$password_container->add($password_post, $content);
+        
         // remove ajax support if ajax is set to false
         self::handle_ajax_attribute( $attributes );
         
@@ -129,7 +132,8 @@ class Password_Shortcode_Handler {
         $password_failed = isset( $gps_section_password ) && false !== $is_authenticated;
         
         return do_shortcode( self::get_replacement_content( $password_post, 
-                $password_failed, $is_authenticated, $attributes, $content) );
+                $password_failed, $is_authenticated, $attributes, $content, 
+                $password_instance_idx) );
     }
     
     /**
@@ -185,7 +189,8 @@ class Password_Shortcode_Handler {
      * @since 0.1.4
      */
     private static function get_replacement_content( $password_post, 
-            $password_failed, $unlocked, $attributes, $content = null ){
+            $password_failed, $unlocked, $attributes, $content = null, 
+            $password_instance_idx = 0 ){
                 
         ob_start();
         

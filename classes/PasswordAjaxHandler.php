@@ -109,6 +109,8 @@ class Password_Ajax_Handler {
         $password_post = Password_Post_Type::get_password_post_by_name(
                 filter_input(INPUT_POST, 'password-name' ));
         
+        $password_instance = filter_input(INPUT_POST, 'password-instance' );
+        
         $authenticator = new Password_Authenticator( $password_post );
         
         $is_authenticated = $authenticator->set_authenticated(
