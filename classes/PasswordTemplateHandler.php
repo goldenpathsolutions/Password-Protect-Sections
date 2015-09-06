@@ -15,6 +15,8 @@
  * 
  */
 
+namespace gps\password_protect_sections;
+
 class Password_Template_Handler{
     
     

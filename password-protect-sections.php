@@ -17,6 +17,8 @@
  * 
  */
 
+namespace gps\password_protect_sections;
+
 class Password_Protect_Sections {
     
     public function __construct(){

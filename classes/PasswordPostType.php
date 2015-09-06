@@ -12,6 +12,8 @@
  * @package password-protect-sections
  */
 
+namespace gps\password_protect_sections;
+
 class Password_Post_Type {
     
     var $capability = "edit_passwords";

@@ -7,14 +7,16 @@
  * <code>[gps-password title='<title of password>' use-ajax='no'reload-page='no'] Protected Content [/gps-password]</code>
  * 
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
- * @copyright (c) 2014, Golden Path Solutions, Inc.
+ * @copyright (c) 2014-2015, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.1.0
+ * @version 1.1.1
  * @since 0.1.0
  *
  * @package password-protect-sections
  * 
  */
+
+namespace gps\password_protect_sections;
 
 require_once 'class-password-ajax-handler.php';
 require_once 'class-password-template-handler.php';
@@ -25,12 +27,23 @@ require_once 'class-password-authenticator.php';
  */
 class Password_Shortcode_Handler {
     
-    static $style_version = "1.0.1";
+    static $style_version = "1.0.2";
+    
+    /**
+     * Keeps track of how many password fields appear on a page
+     * so they can be given unique identifiers.  Used for ajax
+     * loading. 
+     * 
+     * @var gps\password_protect_section\PasswordTracker   
+     */
+    static $password_tracker;
     
     /**
      * @since 0.1.4
      */
     public function __construct() {
+        
+        static::$password_tracker = new gps\password_protect_section\PasswordTracker();
         
         // register and enqueue the style
         add_action('init', array(__CLASS__, 'register_style'));

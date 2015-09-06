@@ -18,6 +18,8 @@
  * 
  */
 
+namespace gps\password_protect_sections;
+
 /**
  * @since 0.2.0
  */

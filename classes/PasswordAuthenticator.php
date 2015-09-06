@@ -15,6 +15,8 @@
  * @package password-protect-sections
  */
 
+namespace gps\password_protect_sections;
+
 class Password_Authenticator{
     
     /**
