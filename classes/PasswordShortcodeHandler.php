@@ -111,6 +111,7 @@ class Password_Shortcode_Handler {
             return do_shortcode($content);
         }
         
+        // remove ajax support if ajax is set to false
         self::handle_ajax_attribute( $attributes );
         
         // check to see if we're relocking
@@ -251,13 +252,13 @@ class Password_Shortcode_Handler {
     }
     
     /**
-     * If the ajax attribute is not present, remove the ajax handler
+     * If the ajax attribute is set to false, remove the ajax handler
      * 
      * @param array $attributes the set of shortcode attributes
      */
     private static function handle_ajax_attribute( $attributes ){
         
-        if ( ! $attributes['ajax'] ){
+        if ( false === $attributes['ajax'] ){
             wp_dequeue_script( 'gps-password-ajax-handler' );
         }
         
