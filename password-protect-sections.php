@@ -37,16 +37,16 @@ class Password_Protect_Sections {
         
         
         //Add a Custom Post Type for Password Objects
-        require_once ( 'classes/class-password-post-type.php' );
+        require_once ( 'classes/PasswordPostType.php' );
         new Password_Post_Type();
         
         
         //Add shortcode handler
-        require_once( 'classes/class-password-shortcode-handler.php' );
+        require_once( 'classes/PasswordShortcodeHandler.php' );
         new Password_Shortcode_Handler();
         
         //Add settings page
-        require_once( 'classes/class-password-settings-handler.php');
+        require_once( 'classes/PasswordSettingsHandler.php');
         new Password_Settings_Handler();
         
         

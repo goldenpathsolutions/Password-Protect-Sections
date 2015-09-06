@@ -18,9 +18,10 @@
 
 namespace gps\password_protect_sections;
 
-require_once 'class-password-ajax-handler.php';
-require_once 'class-password-template-handler.php';
-require_once 'class-password-authenticator.php';
+require_once 'PasswordAjaxHandler.php';
+require_once 'PasswordTemplateHandler.php';
+require_once 'PasswordAuthenticator.php';
+require_once 'PasswordContainer.php';
 
 /**
  * @since 0.1.4

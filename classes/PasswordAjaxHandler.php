@@ -16,9 +16,9 @@
 
 namespace gps\password_protect_sections;
 
-require_once 'class-password-post-type.php';
-require_once 'class-password-authenticator.php';
-require_once 'class-shortcode-parser.php';
+require_once 'PasswordPostType.php';
+require_once 'PasswordAuthenticator.php';
+require_once 'ShortcodeParser.php';
 
 /**
  * Class Password Ajax Handler
