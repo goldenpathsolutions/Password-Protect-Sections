@@ -7,30 +7,43 @@
  * <code>[gps-password title='<title of password>' use-ajax='no'reload-page='no'] Protected Content [/gps-password]</code>
  * 
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
- * @copyright (c) 2014, Golden Path Solutions, Inc.
+ * @copyright (c) 2014-2015, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.1.0
+ * @version 1.1.2
  * @since 0.1.0
  *
  * @package password-protect-sections
  * 
  */
 
-require_once 'class-password-ajax-handler.php';
-require_once 'class-password-template-handler.php';
-require_once 'class-password-authenticator.php';
+namespace gps\password_protect_sections;
+
+require_once 'PasswordAjaxHandler.php';
+require_once 'PasswordTemplateHandler.php';
+require_once 'PasswordAuthenticator.php';
+require_once 'PasswordContainer.php';
 
 /**
  * @since 0.1.4
  */
 class Password_Shortcode_Handler {
     
-    static $style_version = "1.0.1";
+    static $style_version = "1.0.2";
+    
+    /**
+     * Keeps track of password instances and their protected content blocks
+     * 
+     * @var gps\password_protect_section\PasswordContainer 
+     * @since 0.3.0 
+     */
+    static $password_container;
     
     /**
      * @since 0.1.4
      */
     public function __construct() {
+        
+        static::$password_container = new PasswordContainer();
         
         // register and enqueue the style
         add_action('init', array(__CLASS__, 'register_style'));
@@ -40,7 +53,7 @@ class Password_Shortcode_Handler {
         Password_Ajax_Handler::init();
         
         // Add AJAX Handler enqueue operation to the wp_enqueue_scripts hook
-        add_action('wp_enqueue_scripts', array('Password_Ajax_Handler', 'enqueue_script'));
+        add_action('wp_enqueue_scripts', array('gps\password_protect_sections\Password_Ajax_Handler', 'enqueue_script'));
         
         // Add the shortcode
         add_shortcode( 'gps-password', array( __CLASS__, 'gps_password_shortcode') );
@@ -99,6 +112,10 @@ class Password_Shortcode_Handler {
             return do_shortcode($content);
         }
         
+        // store the password object and content in the $password_container
+        $password_instance_idx = static::$password_container->add($password_post, $content);
+        
+        // remove ajax support if ajax is set to false
         self::handle_ajax_attribute( $attributes );
         
         // check to see if we're relocking
@@ -115,7 +132,8 @@ class Password_Shortcode_Handler {
         $password_failed = isset( $gps_section_password ) && false !== $is_authenticated;
         
         return do_shortcode( self::get_replacement_content( $password_post, 
-                $password_failed, $is_authenticated, $attributes, $content) );
+                $password_failed, $is_authenticated, $attributes, $content, 
+                $password_instance_idx) );
     }
     
     /**
@@ -171,7 +189,8 @@ class Password_Shortcode_Handler {
      * @since 0.1.4
      */
     private static function get_replacement_content( $password_post, 
-            $password_failed, $unlocked, $attributes, $content = null ){
+            $password_failed, $unlocked, $attributes, $content = null, 
+            $password_instance_idx = 0 ){
                 
         ob_start();
         
@@ -239,13 +258,13 @@ class Password_Shortcode_Handler {
     }
     
     /**
-     * If the ajax attribute is not present, remove the ajax handler
+     * If the ajax attribute is set to false, remove the ajax handler
      * 
      * @param array $attributes the set of shortcode attributes
      */
     private static function handle_ajax_attribute( $attributes ){
         
-        if ( ! $attributes['ajax'] ){
+        if ( false === $attributes['ajax'] ){
             wp_dequeue_script( 'gps-password-ajax-handler' );
         }
         

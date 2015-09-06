@@ -7,16 +7,18 @@
  * 
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2015, Golden Path Solutions, Inc.
- * @version 1.0.0
+ * @version 1.0.1
  * @since 0.2.0
  * 
  * @package password-protect-sections
  * 
  */
 
-require_once 'class-password-post-type.php';
-require_once 'class-password-authenticator.php';
-require_once 'class-shortcode-parser.php';
+namespace gps\password_protect_sections;
+
+require_once 'PasswordPostType.php';
+require_once 'PasswordAuthenticator.php';
+require_once 'ShortcodeParser.php';
 
 /**
  * Class Password Ajax Handler
@@ -106,6 +108,8 @@ class Password_Ajax_Handler {
                         
         $password_post = Password_Post_Type::get_password_post_by_name(
                 filter_input(INPUT_POST, 'password-name' ));
+        
+        $password_instance = filter_input(INPUT_POST, 'password-instance' );
         
         $authenticator = new Password_Authenticator( $password_post );
         

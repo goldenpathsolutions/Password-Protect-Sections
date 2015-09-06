@@ -7,9 +7,9 @@
  * Repsonsible for storing and retrieving settings selections in the database.
  * 
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
- * @copyright (c) 2014, Golden Path Solutions, Inc.
+ * @copyright (c) 2014-2015, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.0.1
+ * @version 1.0.2
  * @since 0.1.0
  * 
  * @package password-protect-sections
@@ -18,6 +18,8 @@
  * Author URL: http://www.goldenpathsolutions.com
  * Created: 2014-07-21
  */
+
+namespace gps\password_protect_sections;
 
 include_once ( dirname( dirname( __FILE__ ) ) . '/password-protect-sections.php' );
 

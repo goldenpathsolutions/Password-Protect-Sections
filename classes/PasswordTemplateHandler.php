@@ -8,12 +8,14 @@
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2015, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.0.0
+ * @version 1.0.1
  * @since 0.2.0
  *
  * @package password-protect-sections
  * 
  */
+
+namespace gps\password_protect_sections;
 
 class Password_Template_Handler{
     

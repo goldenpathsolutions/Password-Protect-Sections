@@ -53,6 +53,9 @@ if ( isset($attributes['reload_page'] ) ){
     <input type="hidden" name="password-name" 
            value="<?php echo $password_post->post_title; ?>"/>
     
+    <input type="hidden" name="password-instance" 
+           value="<?php echo $password_instance_idx; ?>"/>
+    
     <input type="hidden" name="protected-post-id" 
            value="<?php echo $protected_post_id; ?>"/>
     

@@ -6,16 +6,18 @@
  * Plugin URI: http://wordpress.org/extend/plugins/password-protect-sections   
  * Description: Password protect sections of content within a post
  * Author: Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * Version: 0.2.2
+ * Version: 0.3.0
  * Author URI: http://www.goldenpathsolutions.com
  * License: GPLv2
  * 
  * 
  * @package password-protect-sections
  * @author Patrick Jackson, Golden Path Solutions <pjackson@goldenpathsolutions.com>
- * @version 0.2.1
+ * @version 0.3.0
  * 
  */
+
+namespace gps\password_protect_sections;
 
 class Password_Protect_Sections {
     
@@ -35,16 +37,16 @@ class Password_Protect_Sections {
         
         
         //Add a Custom Post Type for Password Objects
-        require_once ( 'classes/class-password-post-type.php' );
+        require_once ( 'classes/PasswordPostType.php' );
         new Password_Post_Type();
         
         
         //Add shortcode handler
-        require_once( 'classes/class-password-shortcode-handler.php' );
+        require_once( 'classes/PasswordShortcodeHandler.php' );
         new Password_Shortcode_Handler();
         
         //Add settings page
-        require_once( 'classes/class-password-settings-handler.php');
+        require_once( 'classes/PasswordSettingsHandler.php');
         new Password_Settings_Handler();
         
         
