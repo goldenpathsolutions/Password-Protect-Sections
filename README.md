@@ -1,6 +1,9 @@
 Password-Protect-Sections
 =========================
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/goldenpathsolutions/Password-Protect-Sections/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/goldenpathsolutions/Password-Protect-Sections/?branch=develop)
+[![Build Status](https://scrutinizer-ci.com/g/goldenpathsolutions/Password-Protect-Sections/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/goldenpathsolutions/Password-Protect-Sections/build-status/develop)
+
 A WordPress Plugin that allows a user to password protect sections of content within a post using a simple shortcode.
 
 #Disclaimer - Beta Release!
