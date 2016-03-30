@@ -28,7 +28,7 @@ require_once 'PasswordContainer.php';
  */
 class Password_Shortcode_Handler {
     
-    static $style_version = "1.0.2";
+    public static $style_version = "1.0.2";
     
     /**
      * Keeps track of password instances and their protected content blocks
@@ -36,7 +36,7 @@ class Password_Shortcode_Handler {
      * @var PasswordContainer 
      * @since 0.3.0 
      */
-    static $password_container;
+    protected static $password_container;
     
     /**
      * @since 0.1.4
