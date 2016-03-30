@@ -9,7 +9,7 @@
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2014-2015, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.1.2
+ * @version 1.2.0
  * @since 0.1.0
  *
  * @package password-protect-sections
@@ -153,6 +153,8 @@ class Password_Shortcode_Handler {
             'title' => null,
             'ajax' => true,
             'reload_page' => false,
+            'unlocked_template' => Password_Template_Handler::get_default_unlocked_template(),
+            'locked_template' => Password_Template_Handler::get_default_locked_template(),
         ), $attributes_in );
         
         // set ajax flag to false if attribute is "false" or "no", otherwise true (default)
@@ -172,6 +174,8 @@ class Password_Shortcode_Handler {
      * 
      * Decides what content should replace the shortcode: either the protected
      * content, or the login form.
+     * 
+     * Note that the apparently unused paramters are used in the required template.
      * 
      * 
      * @access private
@@ -196,10 +200,14 @@ class Password_Shortcode_Handler {
         
         if ( $unlocked ){ 
             $template_file = Password_Template_Handler::find_template_file( 
-                    "/password-protect-sections-unlocked-template.php" );
+                    $attributes['unlocked-template'] );
+            
+            apply_filters('password-protect-sections-unlocked-template', $template_file);
         } else {
             $template_file = Password_Template_Handler::find_template_file ( 
-                    "/password-protect-sections-locked-template.php" );
+                    $attributes['locked-template'] );
+            
+            apply_filters('password-protect-sections-locked-template', $template_file);
         }
         
         require( $template_file );
