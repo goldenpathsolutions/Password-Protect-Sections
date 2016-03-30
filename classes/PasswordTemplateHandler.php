@@ -8,7 +8,7 @@
  * @author Patrick Jackson <pjackson@goldenpathsolutions.com>
  * @copyright (c) 2015, Golden Path Solutions, Inc.
  * @link http://www.goldenpathsolutions.com
- * @version 1.0.1
+ * @version 1.1.0
  * @since 0.2.0
  *
  * @package password-protect-sections
@@ -19,6 +19,8 @@ namespace gps\password_protect_sections;
 
 class Password_Template_Handler{
     
+    protected static $default_unlocked_template = '/password-protect-sections-unlocked-template.php';
+    protected static $default_locked_template = '/password-protect-sections-locked-template.php';
     
     /**
      * Find Template File
@@ -53,5 +55,13 @@ class Password_Template_Handler{
         
         // finally, choose plugin default
         return dirname( __FILE__ ) . '/..' . $default_template_file_name;
+    }
+    
+    public static function get_default_unlocked_template(){
+        return static::$$default_unlocked_template;
+    }
+    
+    public static function get_default_locked_template(){
+        return static::$$default_locked_template;
     }
 }
