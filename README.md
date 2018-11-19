@@ -45,7 +45,7 @@ No special installation instructions.  Just install the plugin like any other. :
 ## Create a _Password_ post
 The first thing to do is Add a new Password object.  A Password is a custom post type, so you can create as many as you want.  You create them just like you would a new page or post.  All you really need is a unique title for the Password to get started. Later, you can add custom content and templates if you want to get fancy.
 
-![Screenshot: Editing a Password Object](http://www.goldenpathsolutions.com/live/wp-content/uploads/2015/08/Screenshot-2015-08-25-07.49.17.png)
+![Screenshot: Editing a Password Object](https://goldenpathsolutions.com/wp-content/uploads/2015/08/Screenshot-2015-08-25-07.49.17.png)
 
 ## Using the Shortcode
 The next step is to enclose some section of content with the shortcode.  The shortcode must include the title of the Password object you want to use.
