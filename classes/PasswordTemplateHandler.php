@@ -59,10 +59,10 @@ class Password_Template_Handler {
 	}
 
 	public static function get_default_unlocked_template() {
-		return static::$$default_unlocked_template;
+		return static::$default_unlocked_template;
 	}
 
 	public static function get_default_locked_template() {
-		return static::$$default_locked_template;
+		return static::$default_locked_template;
 	}
 }
