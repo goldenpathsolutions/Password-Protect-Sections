@@ -86,14 +86,14 @@ class Password_Ajax_Handler {
 	 */
 	public static function register_script() {
 		wp_register_script( 'gps-password-ajax-handler',
-			plugins_url( 'password-protect-sections/js/ajax-handler.js' ),
+			plugins_url( 'js/ajax-handler.js', dirname(__FILE__) ),
 			array( 'jquery' ), self::$js_version, true );
 
 		// make the ajax_url available to the ajax javascript
 		wp_localize_script( 'gps-password-ajax-handler', 'gps_ajax_data',
 			array(
 				'ajax_url'        => admin_url( 'admin-ajax.php' ),
-				'ajax_loader_url' => plugins_url() . "/password-protect-sections/images/ajax-loader.gif",
+				'ajax_loader_url' => plugins_url('images/ajax-loader.gif', dirname(__FILE__)),
 			) );
 	}
 

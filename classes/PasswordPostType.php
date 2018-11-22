@@ -69,7 +69,7 @@ class Password_Post_Type {
 	 * @since 0.1.0
 	 */
 	public function enqueue_admin_style() {
-		wp_enqueue_style( 'gps_password_admin_style', plugins_url( 'password-protect-sections/css/style-admin.css' ) );
+		wp_enqueue_style( 'gps_password_admin_style', plugins_url( 'css/style-admin.css', dirname(__FILE__) ) );
 	}
 
 	/**

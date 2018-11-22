@@ -31,7 +31,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'instructions';
 			<div class="sidebar-title"><h3>Brought to you by...</h3></div>
 			<div class="sidebar-description center">
 				<img id="gps-logo"
-				     src="<?php echo plugins_url(); ?>/password-protect-sections/images/logo_name_c_300.png"
+				     src="<?php echo plugins_url('images/logo_name_c_300.png', dirname(__FILE__)); ?>"
 				     alt="Golden Path Solutions"/>
 			</div>
 		</div>
@@ -80,7 +80,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'instructions';
 			<div class="sidebar-title"><h3>Brought to you by...</h3></div>
 			<div class="sidebar-description center">
 				<img id="gps-logo"
-				     src="<?php echo plugins_url(); ?>/password-protect-sections/images/logo_name_c_300.png"
+				     src="<?php echo plugins_url('images/logo_name_c_300.png', dirname(__FILE__)); ?>"
 				     alt="Golden Path Solutions"/>
 			</div>
 		</div>

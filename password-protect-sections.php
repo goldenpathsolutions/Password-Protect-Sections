@@ -74,7 +74,7 @@ class Password_Protect_Sections {
 		$srcs = array_map( 'basename', (array) wp_list_pluck( $wp_styles->registered, 'src' ) );
 
 		if ( ! ( in_array( 'font-awesome.css', $srcs ) || in_array( 'font-awesome.min.css', $srcs ) ) ) {
-			wp_enqueue_style( 'font-awesome', plugins_url() . '/password-protect-sections/css/font-awesome.min.css' );
+			wp_enqueue_style( 'font-awesome', plugins_url('css/font-awesome.min.css', __FILE__) );
 		}
 
 	}

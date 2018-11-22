@@ -16,7 +16,7 @@
 var $content_store = [];
 
 // preload ajax gif
-var $loading_image = jQuery('<img class="password-ajax-loading" width="15"'
+var $loading_image = jQuery('<img class="password-ajax-loading" alt="" width="15"'
 	+ 'height="15" src="' + gps_ajax_data.ajax_loader_url + '">');
 
 /**

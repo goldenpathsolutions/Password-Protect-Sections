@@ -73,7 +73,7 @@ class Password_Shortcode_Handler {
 	public static function register_style() {
 
 		wp_register_style( "gps_password_style",
-			plugins_url( 'password-protect-sections/css/style.css' ), null,
+			plugins_url( 'css/style.css', dirname(__FILE__) ), null,
 			self::$style_version );
 	}
 
