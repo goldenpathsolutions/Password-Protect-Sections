@@ -33,9 +33,9 @@ $errorbackground: #ffebfa;
 
 // help styling on ajax loading animation
 img.password-ajax-loading {
-    margin: 0 5px;
-    width: 16px !important;
-    height: 16px !important;
+	margin: 0 5px;
+	width: 16px !important;
+	height: 16px !important;
 }
 
 /*---------------------------------------------------------------------------
@@ -46,89 +46,93 @@ img.password-ajax-loading {
 
 // Wraps the everything enclosed by the shortcode
 div.password-protected-section {
-    
-    // applied when the protected section is locked
-    &.locked {
-        
-        background-color: $lockedContentBackground;
-        border: 1px solid darken($lockedContentBackground, 50%);
-        padding: 5px 5px 10px;
-        
-        // the form element used to enter the password
-        form { margin: 10px 0 0;}
 
-        // the text in the replacement section
-        p { 
-            margin: 0; 
-            line-height: 1.25em;
-        }
+	// applied when the protected section is locked
+	&.locked {
 
-        // the "Password" label for the password field 
-        label { 
-            font-weight: bold; 
-            margin-right: 10px;
-        }
+		background-color: $lockedContentBackground;
+		border: 1px solid darken($lockedContentBackground, 50%);
+		padding: 5px 5px 10px;
 
-        // the submit button for the password form
-        button {
-            margin-left: 10px;
-        }
-        
-        // 
-        .lock-icon {
-            text-align: right;
-            color: darken($lockedContentBackground, 50%);
-            line-height: 1em;
-        }
-    }
-    
-    /*------------------------------------------------------------------------
-     *  4. Section Content (Unlocked)
-     *
-     *  Applied to the protected content after being unlocked
-     *-----------------------------------------------------------------------*/
-    
-    &.unlocked {
-        border: darken($unlockedContentBackground, 10%) 1px solid;
-        //border-bottom: darken($unlockedContentBackground, 10%) 1px solid;
-        background-color: $unlockedContentBackground;
-        padding: 5px;
-        
-        .relock-link {
-            display: block;
-            text-align: right;
-            color: darken($unlockedContentBackground, 10%);
-        }
-        
-        form { margin: 0; }
-    }
-    
-    
-    /*------------------------------------------------------------------------
-     *  5. Validation Markup
-     *
-     *  Applied to form elements when a mistake is made
-     *-----------------------------------------------------------------------*/
-    
-    p.gps-error { 
-        padding: 5px; 
-        margin-bottom: 5px;
-    }
-    
-    p.gps-error, input.gps-error {
-        color: darken($errorbackground, 65%);
-        font-weight: bold;
-    }
-    
-    input.gps-error {
-        background-color: $errorbackground;
-        border: 1px solid darken($errorbackground, 50%);
-    }
-    
-    label.gps-error {
-        color: darken($errorbackground, 65%);
-    }
-    
+		// the form element used to enter the password
+		form {
+			margin: 10px 0 0;
+		}
+
+		// the text in the replacement section
+		p {
+			margin: 0;
+			line-height: 1.25em;
+		}
+
+		// the "Password" label for the password field
+		label {
+			font-weight: bold;
+			margin-right: 10px;
+		}
+
+		// the submit button for the password form
+		button {
+			margin-left: 10px;
+		}
+
+		//
+		.lock-icon {
+			text-align: right;
+			color: darken($lockedContentBackground, 50%);
+			line-height: 1em;
+		}
+	}
+
+	/*------------------------------------------------------------------------
+	 *  4. Section Content (Unlocked)
+	 *
+	 *  Applied to the protected content after being unlocked
+	 *-----------------------------------------------------------------------*/
+
+	&.unlocked {
+		border: darken($unlockedContentBackground, 10%) 1px solid;
+		//border-bottom: darken($unlockedContentBackground, 10%) 1px solid;
+		background-color: $unlockedContentBackground;
+		padding: 5px;
+
+		.relock-link {
+			display: block;
+			text-align: right;
+			color: darken($unlockedContentBackground, 10%);
+		}
+
+		form {
+			margin: 0;
+		}
+	}
+
+
+	/*------------------------------------------------------------------------
+	 *  5. Validation Markup
+	 *
+	 *  Applied to form elements when a mistake is made
+	 *-----------------------------------------------------------------------*/
+
+	p.gps-error {
+		padding: 5px;
+		margin-bottom: 5px;
+	}
+
+	p.gps-error, input.gps-error {
+		color: darken($errorbackground, 65%);
+		font-weight: bold;
+	}
+
+	input.gps-error {
+		background-color: $errorbackground;
+		border: 1px solid darken($errorbackground, 50%);
+	}
+
+	label.gps-error {
+		color: darken($errorbackground, 65%);
+	}
+
 }
 
 

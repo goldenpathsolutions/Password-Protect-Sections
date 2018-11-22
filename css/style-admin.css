@@ -16,49 +16,76 @@
     
 */
 .center {
-  text-align: center; }
+	text-align: center;
+}
 
 .gps-password-settings .content {
-  max-width: 63%;
-  min-width: 300px;
-  margin-right: 1.5%; }
+	max-width: 63%;
+	min-width: 300px;
+	margin-right: 1.5%;
+}
+
 .gps-password-settings .sidebar {
-  width: 33%;
-  min-width: 300px;
-  float: right;
-  margin: 0 20px;
-  overflow: hidden;
-  background-color: #eee; }
-  .gps-password-settings .sidebar.mobile {
-    display: none; }
-  @media only screen and (max-width: 640px) {
-    .gps-password-settings .sidebar.desktop {
-      display: none; }
-    .gps-password-settings .sidebar.mobile {
-      display: block;
-      float: none;
-      margin: 20px auto; } }
-  .gps-password-settings .sidebar a {
-    text-decoration: none; }
-  .gps-password-settings .sidebar .sidebar-content {
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border: #ccc 1px solid; }
-    .gps-password-settings .sidebar .sidebar-content h3 {
-      margin: 0 auto 10px; }
-    .gps-password-settings .sidebar .sidebar-content .social {
-      display: inline-block;
-      margin-left: 10%; }
-      .gps-password-settings .sidebar .sidebar-content .social .fa {
-        display: inline-block;
-        font-size: 1.5em;
-        margin: 10px; }
-  .gps-password-settings .sidebar .sidebar-title {
-    border-bottom: #ccc 1px solid; }
-  .gps-password-settings .sidebar .sidebar-description {
-    padding: 10px; }
-  .gps-password-settings .sidebar #gps-logo {
-    width: 100%; }
+	width: 33%;
+	min-width: 300px;
+	float: right;
+	margin: 0 20px;
+	overflow: hidden;
+	background-color: #eee;
+}
+
+.gps-password-settings .sidebar.mobile {
+	display: none;
+}
+
+@media only screen and (max-width: 640px) {
+	.gps-password-settings .sidebar.desktop {
+		display: none;
+	}
+
+	.gps-password-settings .sidebar.mobile {
+		display: block;
+		float: none;
+		margin: 20px auto;
+	}
+}
+
+.gps-password-settings .sidebar a {
+	text-decoration: none;
+}
+
+.gps-password-settings .sidebar .sidebar-content {
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: #ccc 1px solid;
+}
+
+.gps-password-settings .sidebar .sidebar-content h3 {
+	margin: 0 auto 10px;
+}
+
+.gps-password-settings .sidebar .sidebar-content .social {
+	display: inline-block;
+	margin-left: 10%;
+}
+
+.gps-password-settings .sidebar .sidebar-content .social .fa {
+	display: inline-block;
+	font-size: 1.5em;
+	margin: 10px;
+}
+
+.gps-password-settings .sidebar .sidebar-title {
+	border-bottom: #ccc 1px solid;
+}
+
+.gps-password-settings .sidebar .sidebar-description {
+	padding: 10px;
+}
+
+.gps-password-settings .sidebar #gps-logo {
+	width: 100%;
+}
 
 /*# sourceMappingURL=style-admin.css.map */
