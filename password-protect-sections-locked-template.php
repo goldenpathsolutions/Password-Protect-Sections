@@ -42,7 +42,7 @@ if ( isset( $attributes['reload_page'] ) ) {
 		echo "<p class='gps-error'>" . $failed_message . "</p>";
 	} ?>
 
-	<?php echo $password_post->post_content; ?>
+	<?php echo trim( wpautop( $password_post->post_content ) ) ?>
 
 	<form name="password-protected-section-<?php echo $password_post->ID; ?>"
 	      id="password-protected-section_<?php echo $password_post->ID; ?>"
