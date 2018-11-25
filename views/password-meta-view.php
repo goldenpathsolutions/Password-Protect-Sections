@@ -36,6 +36,6 @@ $failed_message = $stored_message ? $stored_message :
 <div class="field-section">
 	<h4><label for="password_failed_message">Failed Password Message</label></h4>
 	<p class="field-description">Enter the message used if a visitor enters the wrong password</p>
-	<input type='text' name='password_failed_message' id='password_failed_message' maxlength="1024"
+	<input type='text' name='password_failed_message' id='password_failed_message' maxlength="1024" size="80"
 	       value='<?php echo $failed_message ?>'/>
 </div>
