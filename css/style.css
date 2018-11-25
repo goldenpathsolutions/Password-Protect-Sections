@@ -25,10 +25,9 @@
  *  May be applied anywhere
  *---------------------------------------------------------------------------*/
 img.password-ajax-loading {
-	margin: 0 5px;
-	width: 16px !important;
-	height: 16px !important;
-}
+  margin: 0 5px;
+  width: 16px !important;
+  height: 16px !important; }
 
 /*---------------------------------------------------------------------------
  *  3. Section Replacement Content (Locked)
@@ -36,81 +35,51 @@ img.password-ajax-loading {
  *  Applied to replacement content when a section is locked.
  *---------------------------------------------------------------------------*/
 div.password-protected-section {
-	/*------------------------------------------------------------------------
-	 *  4. Section Content (Unlocked)
-	 *
-	 *  Applied to the protected content after being unlocked
-	 *-----------------------------------------------------------------------*/
-	/*------------------------------------------------------------------------
-	 *  5. Validation Markup
-	 *
-	 *  Applied to form elements when a mistake is made
-	 *-----------------------------------------------------------------------*/
-}
-
-div.password-protected-section.locked {
-	background-color: LightYellow;
-	border: 1px solid #e0e000;
-	padding: 5px 5px 10px;
-}
-
-div.password-protected-section.locked form {
-	margin: 10px 0 0;
-}
-
-div.password-protected-section.locked p {
-	margin: 0;
-	line-height: 1.25em;
-}
-
-div.password-protected-section.locked label {
-	font-weight: bold;
-	margin-right: 10px;
-}
-
-div.password-protected-section.locked button {
-	margin-left: 10px;
-}
-
-div.password-protected-section.locked .lock-icon {
-	text-align: right;
-	color: #e0e000;
-	line-height: 1em;
-}
-
-div.password-protected-section.unlocked {
-	border: #e4e4e4 1px solid;
-	background-color: #fdfdfd;
-	padding: 5px;
-}
-
-div.password-protected-section.unlocked .relock-link {
-	display: block;
-	text-align: right;
-	color: #e4e4e4;
-}
-
-div.password-protected-section.unlocked form {
-	margin: 0;
-}
-
-div.password-protected-section p.gps-error {
-	padding: 5px;
-	margin-bottom: 5px;
-}
-
-div.password-protected-section p.gps-error, div.password-protected-section input.gps-error {
-	color: #9e0077;
-	font-weight: bold;
-}
-
-div.password-protected-section input.gps-error {
-	background-color: #ffebfa;
-	border: 1px solid #eb00b0;
-}
-
-div.password-protected-section label.gps-error {
-	color: #9e0077;
-}
+  padding: 10px;
+  /*------------------------------------------------------------------------
+   *  4. Section Content (Unlocked)
+   *
+   *  Applied to the protected content after being unlocked
+   *-----------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+   *  5. Validation Markup
+   *
+   *  Applied to form elements when a mistake is made
+   *-----------------------------------------------------------------------*/ }
+  div.password-protected-section.locked {
+    background-color: LightYellow;
+    border: 1px solid #e0e000; }
+    div.password-protected-section.locked form {
+      margin: 10px 0 0; }
+    div.password-protected-section.locked p {
+      margin: 0;
+      line-height: 1.25em; }
+    div.password-protected-section.locked label {
+      font-weight: bold;
+      margin-right: 10px; }
+    div.password-protected-section.locked .lock-icon {
+      text-align: right;
+      color: #e0e000;
+      line-height: 1em; }
+  div.password-protected-section.unlocked {
+    border: #e4e4e4 1px solid;
+    background-color: #fdfdfd; }
+    div.password-protected-section.unlocked .relock-link {
+      display: block;
+      text-align: right;
+      color: #e4e4e4; }
+    div.password-protected-section.unlocked form {
+      margin: 0; }
+  div.password-protected-section p.gps-error {
+    padding: 5px;
+    margin-bottom: 5px; }
+  div.password-protected-section p.gps-error, div.password-protected-section input.gps-error {
+    color: #9f0077;
+    font-weight: bold; }
+  div.password-protected-section input.gps-error {
+    background-color: #ffebfa;
+    border: 1px solid #eb00b0; }
+  div.password-protected-section label.gps-error {
+    color: #9f0077; }
 
 /*# sourceMappingURL=style.css.map */
