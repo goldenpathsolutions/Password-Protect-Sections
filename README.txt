@@ -60,6 +60,21 @@ The next step is to enclose some section of content with the shortcode.  The sho
     This section is below the protected section. It is NOT password protected
 
 
+## Shortcode Attributes
+Following are the attribute you can use with the shortcode.
+
+* **title** — **REQUIRED** — the title of the password post type you are using to protect the section contained by the shortcode.  This is the human-readable title, not the slug.
+* **ajax** — Submit the password, and update content via ajax when ajax="true", otherwise submit and reload the page.  Accepted values: true, false, on, off.  TRUE by default.
+* **unlocked-template** — The template used to display the unlocked state is titled `password-protect-sections-unlocked-template.php` by default.  If you want to override this, set this default to the new title. The system will check the child theme, and then the parent theme for this file.  You can include a relative path here if you prefer.
+* **locked-template** — The template used to display the locked state is titled `password-protect-sections-locked-template.php` by default. Use this attribute to override this.  You may include the subdirectory path relative to the child or parent theme.
+* **reload-page** — We encountered some cases where the content failed to load properly without reloading the page after it was authenticated.  If the page content doesn't show properly after locking/unlocking, try setting this to true.  FALSE by default.
+
+## Customizing the Templates
+If you want to customize the templates for the locked and unlocked states for you content, copy the following files from the root of this plugin's directory to the root of your theme directory.  The copy in the theme directory will override the default in the plugin directory. Revise the duplicate templates as you see fit.
+* `password-protect-sections-unlocked-template.php`
+* `password-protect-sections-locked-template.php`
+
+If you want to use a different file name, and/or place them in a subdirectory, use the `locked-template` and/or `unlocked-template` attributes to override the default title and location.  See Shortcode Attributes section above.
 
 # Contact
 Patrick Jackson
