@@ -201,7 +201,7 @@ class Password_Ajax_Handler {
 	 *
 	 * @access private
 	 *
-	 * @param WP_Post $password_post the password post type object.  Passed to the
+	 * @param \WP_Post $password_post the password post type object.  Passed to the
 	 *                              template.
 	 * @param boolean $is_reload_page true when reload-page is set.  Passed to the
 	 *                                template.
