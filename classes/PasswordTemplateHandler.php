@@ -41,7 +41,7 @@ class Password_Template_Handler {
 		 * If no child, it'll just return the active theme
 		 */
 		$template_file = get_template_directory() . $default_template_file_name;
-		if ( file_exists( $template_file ) ) {
+		if ( file_exists( $template_file ) && ! is_dir( $template_file ) ) {
 			return $template_file;
 		}
 
@@ -50,12 +50,12 @@ class Password_Template_Handler {
 		 * if no parent, this shouldn't be reached, but will return active theme in any case
 		 */
 		$template_file = get_template_directory() . $default_template_file_name;
-		if ( file_exists( $template_file ) ) {
+		if ( file_exists( $template_file ) && ! is_dir( $template_file ) ) {
 			return $template_file;
 		}
 
 		// finally, choose plugin default
-		return dirname( __FILE__ ) . '/..' . $default_template_file_name;
+		return dirname( dirname( __FILE__ ) ) . $default_template_file_name;
 	}
 
 	public static function get_default_unlocked_template() {
