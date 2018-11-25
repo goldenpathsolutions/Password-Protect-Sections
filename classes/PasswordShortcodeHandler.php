@@ -157,9 +157,9 @@ class Password_Shortcode_Handler {
 		$attributes_out = shortcode_atts( array(
 			'title'             => null,
 			'ajax'              => true,
-			'reload_page'       => false,
-			'unlocked_template' => Password_Template_Handler::get_default_unlocked_template(),
-			'locked_template'   => Password_Template_Handler::get_default_locked_template(),
+			'reload-page'       => false,
+			'unlocked-template' => Password_Template_Handler::get_default_unlocked_template(),
+			'locked-template'   => Password_Template_Handler::get_default_locked_template(),
 		), $attributes_in );
 
 		// set ajax flag to false if attribute is "false" or "no", otherwise true (default)
@@ -185,7 +185,7 @@ class Password_Shortcode_Handler {
 	 *
 	 * @access private
 	 *
-	 * @param WP_Post $password_post The gps_password custom post type
+	 * @param \WP_Post $password_post The gps_password custom post type
 	 * @param boolean $password_failed True when the password does not match
 	 *                                      the gps_password
 	 * @param boolean $unlocked True when gps_password is unlocked,
@@ -208,13 +208,11 @@ class Password_Shortcode_Handler {
 		ob_start();
 
 		if ( $unlocked ) {
-			$template_file = Password_Template_Handler::find_template_file(
-				$attributes['unlocked-template'] );
+			$template_file = Password_Template_Handler::find_template_file( $attributes['unlocked-template'] );
 
 			apply_filters( 'password-protect-sections-unlocked-template', $template_file );
 		} else {
-			$template_file = Password_Template_Handler::find_template_file(
-				$attributes['locked-template'] );
+			$template_file = Password_Template_Handler::find_template_file( $attributes['locked-template'] );
 
 			apply_filters( 'password-protect-sections-locked-template', $template_file );
 		}
@@ -228,7 +226,7 @@ class Password_Shortcode_Handler {
 	/**
 	 * Determine whether user chose to relock content, and handle it if they did
 	 *
-	 * @param   WP_Post $password_post The password object we are checking
+	 * @param   \WP_Post $password_post The password object we are checking
 	 *
 	 * @since 0.2.1
 	 */
@@ -254,7 +252,7 @@ class Password_Shortcode_Handler {
 	 * authenticated session, authentication evaluates to true.
 	 *
 	 * @param string $gps_section_password The password entered by the user
-	 * @param WP_Post $password_post The password custom post type that
+	 * @param \WP_Post $password_post The password custom post type that
 	 *                                          contains the correct password
 	 *
 	 * @return boolean  true when password given matches the stored password or
@@ -297,7 +295,7 @@ class Password_Shortcode_Handler {
 	 * Get the password entered in the form.  If nonce verification fails,
 	 * return null
 	 *
-	 * @param   WP_Post $password_post The Password post type we are authenticating against
+	 * @param   \WP_Post $password_post The Password post type we are authenticating against
 	 *
 	 * @return  string   The password entered, or null if nonce verification fails
 	 * @since 0.2.1
