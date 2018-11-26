@@ -54,7 +54,7 @@ class Password_Shortcode_Handler {
 
 		// Add AJAX Handler enqueue operation to the wp_enqueue_scripts hook
 		add_action( 'wp_enqueue_scripts', array(
-			'gps\password_protect_sections\Password_Ajax_Handler',
+			__NAMESPACE__ . '\Password_Ajax_Handler',
 			'enqueue_script',
 		) );
 

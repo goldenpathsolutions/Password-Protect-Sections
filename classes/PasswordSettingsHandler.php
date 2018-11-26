@@ -30,12 +30,10 @@ class Password_Settings_Handler {
 	 */
 	public function __construct() {
 
-		add_action( 'admin_menu', array( 'Password_Settings_Handler', 'add_settings_to_post_menu' ) );
-
-		add_action( 'admin_enqueue_scripts', array( 'Password_Settings_Handler', 'enqueue_style' ) );
+		add_action( 'admin_menu', array( __NAMESPACE__ . '\Password_Settings_Handler', 'add_settings_to_post_menu' ) );
 
 		//Load font awesome if something else hasn't already done so
-		add_action( 'admin_enqueue_scripts', array( 'Password_Protect_Sections', 'check_font_awesome' ), 99999 );
+		add_action( 'admin_enqueue_scripts', array( __NAMESPACE__ . '\Password_Protect_Sections', 'check_font_awesome' ), 99999 );
 	}
 
 	/**
@@ -43,7 +41,7 @@ class Password_Settings_Handler {
 	 */
 	public static function add_settings_to_post_menu() {
 		add_submenu_page( 'edit.php?post_type=gps_password', 'Password Settings', 'Settings', 'publish_password', 'gps_password_settings', array(
-			'Password_Settings_Handler',
+			__NAMESPACE__ . '\Password_Settings_Handler',
 			'gps_password_settings_view',
 		) );
 	}
