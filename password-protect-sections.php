@@ -81,4 +81,7 @@ class Password_Protect_Sections {
 
 }
 
+//  Exit if accessed directly.
+defined('ABSPATH') || exit;
+
 new Password_Protect_Sections();
